@@ -19,6 +19,8 @@ const config = {
     },
     extend: {
       colors: {
+        'custom-blue': '#385CFF',
+        'custom-black': '#282845',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
