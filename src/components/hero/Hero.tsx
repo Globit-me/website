@@ -4,11 +4,9 @@ import ImageCarousel from "./ImageCarousel";
 
 const Hero = () => {
   return (
-    <section className="flex flex-col my-28">
-      <div className="flex flex-row">
-        <AnimatedTitle />
-        <Calculator />
-      </div>
+    <section className="flex flex-row my-28">
+      <AnimatedTitle />
+      <Calculator />
     </section>
   );
 };
