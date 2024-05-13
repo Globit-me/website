@@ -1,10 +1,10 @@
 import Image from "next/image";
-import { LinkItem, ColumnProps } from "../../../types/Footer";
+import { ColumnProps } from "../../../types/Footer";
 import FooterColumn from "./FooterColumn";
 import SocialIcon from "./SocialIcon";
 
 
-export const Footer = () => {
+const Footer = () => {
   const columns: Array<ColumnProps> = [
     {
       title: "Ayuda",
@@ -61,3 +61,5 @@ export const Footer = () => {
     </footer>
   );
 };
+
+export default Footer
