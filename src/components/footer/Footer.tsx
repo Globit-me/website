@@ -1,11 +1,11 @@
 import Image from "next/image";
-import { LinkItem } from "../../../types/Footer";
+import { LinkItem, ColumnProps } from "../../../types/Footer";
 import FooterColumn from "./FooterColumn";
 import SocialIcon from "./SocialIcon";
 
 
 export const Footer = () => {
-  const columns: Array<{ title: string; links: LinkItem[] }> = [
+  const columns: Array<ColumnProps> = [
     {
       title: "Ayuda",
       links: [
