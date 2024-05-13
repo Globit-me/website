@@ -12,10 +12,10 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-import flagUS from "/public/banderas/US.png"
-import flagPY from "/public/banderas/PY.png"
-import flagAR from "/public/banderas/AR.png"
-import flagCL from "/public/banderas/CL.png"
+import flagUS from "/public/flags/US.png"
+import flagPY from "/public/flags/PY.png"
+import flagAR from "/public/flags/AR.png"
+import flagCL from "/public/flags/CL.png"
 
 
 export function Selector() {
