@@ -1,6 +1,6 @@
 import AnimatedTitle from "./AnimatedTitle";
 import Calculator from "./Calculator";
-import ImageCarousel from "./ImageCarousel";
+import ImageCarousel from "../ImageCarousel";
 
 const Hero = () => {
   return (

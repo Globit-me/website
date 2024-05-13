@@ -1,5 +1,5 @@
 import Hero from "@/components/hero/Hero";
-import ImageCarousel from "@/components/hero/ImageCarousel";
+import ImageCarousel from "@/components/ImageCarousel";
 
 export default function Home() {
   return( 

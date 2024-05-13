@@ -28,7 +28,7 @@ const ImageCarousel = () => {
         }}>
         {repeatImages.map((image, index) => (
           <div key={index} className="min-w-max">
-            <Image src={image.src} height={225} width={225} alt={image.alt} />
+            <Image src={image.src} height={225} width={225} alt={image.alt} priority/>
           </div>
         ))}
       </motion.div>
