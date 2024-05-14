@@ -9,18 +9,18 @@ const Footer = () => {
     {
       title: "Ayuda",
       links: [
-        { href: "_blank", text: "Preguntas frecuentes" },
-        { href: "_blank", text: "Nosotros" },
-        { href: "_blank", text: "Programa de referidos" },
-        { href: "_blank", text: "Blog" },
+        { href: "/preguntas", text: "Preguntas frecuentes" },
+        { href: "/nosotros", text: "Nosotros" },
+        { href: "/referidos", text: "Programa de referidos" },
+        { href: "/blog", text: "Blog" },
       ],
     },
     {
       title: "Legales",
       links: [
-        { href: "_blank", text: "Garantía" },
-        { href: "_blank", text: "Política de privacidad" },
-        { href: "_blank", text: "Términos y condiciones" },
+        { href: "/garantia", text: "Garantía" },
+        { href: "/politicas", text: "Política de privacidad" },
+        { href: "/condiciones", text: "Términos y condiciones" },
       ],
     },
     {
