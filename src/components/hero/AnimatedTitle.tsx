@@ -21,33 +21,33 @@ const AnimatedTitle = () => {
 
   return (
     <motion.div
-      className="flex flex-col flex-1 w-full"
+      className="flex flex-col md:flex-1 w-full"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
       <motion.h2
-        className="text-custom-blue font-bold text-5xl"
+        className="text-custom-blue font-bold text-3xl md:text-5xl"
         variants={itemVariants}
       >
         Envía y recibí dinero
       </motion.h2>
       <motion.h2
-        className="text-custom-black font-bold text-2xl"
+        className="text-custom-black font-bold md:text-2xl text-lg"
         variants={itemVariants}
       >
         en cualquier plataforma del mundo
       </motion.h2>
       <motion.div
-        className="space-y-4 mt-12 text-custom-black"
+        className="space-y-2 md:space-y-4 mt-8 md:mt-12 text-custom-black"
         variants={itemVariants}
       >
-        <p>
+        <p className="text-sm md:text-lg">
           ¡Bienvenido! <br />
           <strong>Globit Latinoamérica</strong> te conecta al ¡mundo! <br />
           Trabaja global, cobra local.
         </p>
-        <p>
+        <p className="text-sm md:text-lg">
           Obtén una <strong>cotización competitiva</strong>
           <br />
           desde <strong>cualquier dispositivo.</strong>

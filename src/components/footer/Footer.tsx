@@ -71,7 +71,7 @@ const Footer = () => {
             <SocialIcon src="/svg/instagram.svg" alt="Instagram" />
           </Link>
         </div>
-        <div className="text-custom-black font-light opacity-60 text-sm mt-3 md:mt-0">
+        <div className="text-custom-black font-light opacity-60 text-xs md:text-sm mt-3 md:mt-0">
           © 2024 Globit Todos los derechos reservados, de Latinoamérica al
           mundo.
         </div>
