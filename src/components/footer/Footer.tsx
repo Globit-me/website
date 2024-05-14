@@ -26,7 +26,7 @@ const Footer = () => {
     {
       title: "Contactos",
       links: [
-        { href: "tel:+595991629158", text: "📱 +595 991 629158" },
+        { href: "tel:+595991629158", text: "📱 +595991629158" },
         { href: "mailto:contacto@globit.me", text: "✉️ contacto@globit.me" },
       ],
     },
@@ -35,12 +35,12 @@ const Footer = () => {
   return (
     <footer className="flex flex-col">
       <div className="py-10 bg-custom-blue">
-        <div className="flex flex-row max-w-6xl mx-auto text-white space-x-10">
+        <div className="flex flex-col md:flex-row max-w-6xl mx-auto px-6 md:px-0 text-white space-y-6 md:space-y-0 md:space-x-10">
           {columns.map((column, index) => (
             <FooterColumn key={index} {...column} />
           ))}
-          <div className="flex flex-col w-1/4">
-            <div className="relative w-full h-full mt-auto">
+          <div className="flex flex-col w-full md:w-1/4">
+            <div className="relative w-full h-24 mt-auto">
               <Image
                 src="/logos/globit.png"
                 alt="Globit logo"
@@ -48,7 +48,7 @@ const Footer = () => {
                 className="object-contain"
               />
             </div>
-            <div className="relative w-full h-full mt-auto">
+            <div className="relative w-full h-24 mt-auto">
               <Image
                 src="/logos/ASAEDE-1.png"
                 alt="Asociación Argentina"
@@ -59,7 +59,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-row max-w-6xl mx-auto my-3 justify-between items-center w-full">
+      <div className="flex flex-col md:flex-row max-w-6xl mx-auto my-3 justify-between items-center w-full px-6 md:px-0">
         <div className="flex items-center space-x-3">
           <Link
             href="https://www.linkedin.com/company/globit-me/"
@@ -71,7 +71,7 @@ const Footer = () => {
             <SocialIcon src="/svg/instagram.svg" alt="Instagram" />
           </Link>
         </div>
-        <div className="text-custom-black font-light opacity-60 text-sm">
+        <div className="text-custom-black font-light opacity-60 text-sm mt-3 md:mt-0">
           © 2024 Globit Todos los derechos reservados, de Latinoamérica al
           mundo.
         </div>
