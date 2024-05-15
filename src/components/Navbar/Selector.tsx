@@ -19,7 +19,6 @@ import flagCL from "/public/flags/CL.png"
 
 
 export function Selector() {
-
     const [selectedValue, setSelectedValue] = useState<string>("PY")
 
   return (
