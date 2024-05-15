@@ -27,13 +27,13 @@ const AnimatedTitle = () => {
       animate="visible"
     >
       <motion.h2
-        className="text-custom-blue font-bold text-3xl md:text-5xl"
+        className="text-custom-blue font-bold text-3xl md:text-5xl text-left"
         variants={itemVariants}
       >
         Envía y recibí dinero
       </motion.h2>
       <motion.h2
-        className="text-custom-black font-bold md:text-2xl text-lg"
+        className="text-custom-black font-bold md:text-2xl text-lg text-left"
         variants={itemVariants}
       >
         en cualquier plataforma del mundo
