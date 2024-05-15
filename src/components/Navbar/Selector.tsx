@@ -26,10 +26,10 @@ export function Selector() {
         value={selectedValue}
         onValueChange={(value) => setSelectedValue(value)}
     >
-      <SelectTrigger className="w-[90px]">
-        <SelectValue placeholder={selectedValue} />
+      <SelectTrigger className="w-[90px] border-none focus:outline-none focus:ring-0">
+        <SelectValue placeholder={selectedValue} className=""/>
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="border-none">
         <SelectGroup>
           <SelectItem value="PY"><Image src={flagPY} width={24} height={24} alt="PY" /></SelectItem>
           <SelectItem value="AR"><Image src={flagAR} width={24} height={24} alt="AR" /></SelectItem>
