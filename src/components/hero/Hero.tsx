@@ -1,5 +1,5 @@
+import Calculator from "../calculator/Calculator";
 import AnimatedTitle from "./AnimatedTitle";
-import Calculator from "./Calculator";
 
 const Hero = () => {
   return (

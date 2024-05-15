@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
+import { ArrowUpDown } from "lucide-react";
+import RotatingButton from "./RotatingButton";
 
 type Bank = {
   name: string;
@@ -15,9 +17,10 @@ const Calculator: React.FC = () => {
   ];
 
   const [fromBank, setFromBank] = useState<Bank>(banks[0]);
-  const [toBank, setToBank] = useState<Bank>(banks[0]);
+  const [toBank, setToBank] = useState<Bank>(banks[1]);
   const [amount, setAmount] = useState<number>(0);
   const [exchangedAmount, setExchangedAmount] = useState<number>(0);
+  const [isRotated, setIsRotated] = useState(false);
 
   const calculateExchange = useCallback(
     (amount: number) => {
@@ -47,12 +50,18 @@ const Calculator: React.FC = () => {
 
   const handleToBankChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const selectedBank = banks.find((bank) => bank.name === e.target.value);
-    setToBank(selectedBank ?? banks[0]);
+    setToBank(selectedBank ?? banks[1]);
+  };
+
+  const handleSwitchBanks = () => {
+    const temp = fromBank;
+    setFromBank(toBank);
+    setToBank(temp);
   };
 
   return (
-    <div className="flex flex-col md:flex-1 items-center justify-center p-4">
-      <div className="bg-white shadow-md rounded px-4 py-6 md:px-8 md:pt-6 md:pb-8 mb-4 flex flex-col w-full">
+    <div className="flex flex-col md:flex-1 items-center justify-center my-4 md:my-0">
+      <div className="bg-white shadow-md rounded px-4 py-6 md:px-8 md:pt-6 md:pb-8 flex flex-col w-full">
         <div className="mb-4 flex flex-col md:flex-row items-center">
           <div className="flex-grow mb-4 md:mb-0 md:mr-2">
             <label
@@ -92,13 +101,15 @@ const Calculator: React.FC = () => {
           </div>
         </div>
 
+        <RotatingButton onClick={handleSwitchBanks} className="mb-4" />
+
         <div className="mb-4 flex flex-col md:flex-row items-center">
           <div className="flex-grow mb-4 md:mb-0 md:mr-2">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="exchangedAmount"
             >
-              Recibes
+              Recibes {toBank.currency}
             </label>
             <input
               id="exchangedAmount"
