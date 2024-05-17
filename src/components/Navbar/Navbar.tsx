@@ -3,7 +3,6 @@ import { Selector } from "./Selector";
 import NavLink from "./NavLink";
 import { NavbarMenu } from "./NavbarMenu";
 import Link from "next/link";
-import NavButton from "./NavButton";
 
 const Navbar = () => {
   return (
@@ -47,8 +46,8 @@ const Navbar = () => {
       </div>
 
       <div className="flex-row gap-8 items-center hidden md:flex">
-        <NavButton href="/">Iniciar sesión</NavButton>
-        <NavButton href="/">Registrarse</NavButton>
+        <NavLink href="/" className="font-semibold text-custom-blue">Iniciar sesión</NavLink>
+        <NavLink href="/" className="font-semibold text-custom-blue">Registrarse</NavLink>
         <Selector />
       </div>
     </nav>

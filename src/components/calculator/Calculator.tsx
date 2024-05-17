@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
-import { ArrowUpDown } from "lucide-react";
 import RotatingButton from "./RotatingButton";
+import AmountInput from "./AmountInput";
+import BankSelect from "./BankSelect";
 
 type Bank = {
   name: string;
@@ -10,26 +11,32 @@ type Bank = {
   exchangeRate: number;
 };
 
-const Calculator: React.FC = () => {
-  const banks: Bank[] = [
-    { name: "Bank 1", currency: "USD", exchangeRate: 1 },
-    { name: "Bank 2", currency: "ARS", exchangeRate: 95 },
-  ];
+const banks: Bank[] = [
+  { name: "Payoneer", currency: "USD", exchangeRate: 1 },
+  { name: "Bank 2", currency: "ARS", exchangeRate: 95 },
+];
 
+const Calculator: React.FC = () => {
   const [fromBank, setFromBank] = useState<Bank>(banks[0]);
   const [toBank, setToBank] = useState<Bank>(banks[1]);
   const [amount, setAmount] = useState<number>(0);
   const [exchangedAmount, setExchangedAmount] = useState<number>(0);
-  const [isRotated, setIsRotated] = useState(false);
 
   const calculateExchange = useCallback(
-    (amount: number) => {
-      if (fromBank && toBank) {
-        const exchangedAmount =
-          (amount * fromBank.exchangeRate) / toBank.exchangeRate;
-        setExchangedAmount(exchangedAmount);
-      }
-    },
+    (() => {
+      let timeoutId: NodeJS.Timeout;
+
+      return (amount: number) => {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+          if (fromBank && toBank) {
+            const exchangedAmount =
+              (amount * fromBank.exchangeRate) / toBank.exchangeRate;
+            setExchangedAmount(exchangedAmount);
+          }
+        }, 700);
+      };
+    })(),
     [fromBank, toBank]
   );
 
@@ -59,86 +66,51 @@ const Calculator: React.FC = () => {
     setToBank(temp);
   };
 
-  return (
-    <div className="flex flex-col md:flex-1 items-center justify-center my-4 md:my-0">
-      <div className="bg-white shadow-md rounded px-4 py-6 md:px-8 md:pt-6 md:pb-8 flex flex-col w-full">
-        <div className="mb-4 flex flex-col md:flex-row items-center">
-          <div className="flex-grow mb-4 md:mb-0 md:mr-2">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="amount"
-            >
-              Envías {fromBank.currency}
-            </label>
-            <input
-              id="amount"
-              type="text"
-              value={amount}
-              onChange={handleAmountChange}
-              className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
+  const handleNext = () => {
+    console.log("Next button clicked!");
+  };
 
-          <div className="flex-grow md:ml-2">
-            <label
-              className="text-gray-700 text-sm font-bold mb-2 hidden md:block"
-              htmlFor="fromBank"
-            >
-              Desde Banco
-            </label>
-            <select
-              id="fromBank"
-              value={fromBank.name}
-              onChange={handleFromBankChange}
-              className="text-sm md:text-base shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            >
-              {banks.map((bank) => (
-                <option key={bank.name} value={bank.name}>
-                  {bank.name}
-                </option>
-              ))}
-            </select>
-          </div>
+  return (
+    <div className="flex flex-col md:flex-1 items-center justify-center my-8 md:my-0 border-4">
+      <div className="bg-white shadow-md rounded px-4 py-6 md:px-8 md:pt-6 md:pb-8 flex flex-col w-full">
+        <div className="mb-0 md:mb-4 flex flex-col md:flex-row items-center">
+          <AmountInput
+            label={`Envías ${fromBank.currency}`}
+            amount={amount}
+            onChange={handleAmountChange}
+          />
+          <BankSelect
+            label="Desde Banco"
+            selectedBank={fromBank.name}
+            onChange={handleFromBankChange}
+          />
         </div>
 
         <RotatingButton onClick={handleSwitchBanks} className="mb-4" />
 
-        <div className="mb-4 flex flex-col md:flex-row items-center">
-          <div className="flex-grow mb-4 md:mb-0 md:mr-2">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="exchangedAmount"
-            >
-              Recibes {toBank.currency}
-            </label>
-            <input
-              id="exchangedAmount"
-              type="text"
-              value={exchangedAmount}
-              readOnly
-              className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-
-          <div className="flex-grow md:ml-2">
-            <label
-              className="text-gray-700 text-sm font-bold mb-2 hidden md:block"
-              htmlFor="toBank"
-            >
-              A Banco
-            </label>
-            <select
-              id="toBank"
-              value={toBank.name}
-              onChange={handleToBankChange}
-              className="text-sm md:text-base shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            >
-              {banks.map((bank) => (
-                <option key={bank.name} value={bank.name}>
-                  {bank.name}
-                </option>
-              ))}
-            </select>
+        <div className="mb-0 md:mb-4 flex flex-col md:flex-row items-center">
+          <AmountInput
+            label={`Recibes ${toBank.currency}`}
+            amount={exchangedAmount}
+            onChange={() => {}}
+            readOnly
+          />
+          <BankSelect
+            label="A Banco"
+            selectedBank={toBank.name}
+            onChange={handleToBankChange}
+          />
+        </div>
+        <div className="mt-2 flex flex-col md:flex-row items-center w-full">
+          <button
+            onClick={handleNext}
+            className="bg-custom-blue text-white font-bold py-2 px-4 rounded w-full md:w-1/2 hover:scale-105 transition duration-300"
+          >
+            Solicita tu envío
+          </button>
+          <div className="text-xs space-y-1 leading-tight mt-2 md:mt-0 md:ml-4 text-gray-500 text-center md:text-left">
+            <p>Comisiones y gastos: 6% + 10 USD.</p>
+            <p>48 horas hábiles al recibir el pago.</p>
           </div>
         </div>
       </div>

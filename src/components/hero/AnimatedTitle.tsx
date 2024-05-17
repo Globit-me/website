@@ -27,19 +27,19 @@ const AnimatedTitle = () => {
       animate="visible"
     >
       <motion.h2
-        className="text-custom-blue font-bold text-3xl md:text-5xl text-left"
+        className="text-custom-blue font-bold text-3xl md:text-5xl text-center md:text-left"
         variants={itemVariants}
       >
         Envía y recibí dinero
       </motion.h2>
       <motion.h2
-        className="text-custom-black font-bold md:text-2xl text-lg text-left"
+        className="text-custom-black font-bold md:text-2xl text-lg text-center md:text-left"
         variants={itemVariants}
       >
         en cualquier plataforma del mundo
       </motion.h2>
       <motion.div
-        className="space-y-2 md:space-y-4 mt-8 md:mt-12 text-custom-black"
+        className="space-y-2 md:space-y-4 mt-8 md:mt-12 text-custom-black text-center md:text-left"
         variants={itemVariants}
       >
         <p className="text-sm md:text-lg">
