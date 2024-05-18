@@ -5,6 +5,8 @@ import RotatingButton from "./RotatingButton";
 import AmountInput from "./AmountInput";
 import BankSelect from "./BankSelect";
 
+const numberRegex = /^\d*\.?\d*$/; // Matches any number with or without decimals
+
 type Bank = {
   name: string;
   currency: string;
@@ -45,9 +47,11 @@ const Calculator: React.FC = () => {
   }, [fromBank, toBank, amount, calculateExchange]);
 
   const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.target.value);
-    setAmount(value);
-    calculateExchange(value);
+    const value = e.target.value;
+    if (!numberRegex.test(value)) return;
+    const numberValue = Number(value);
+    setAmount(numberValue);
+    calculateExchange(numberValue);
   };
 
   const handleFromBankChange = (e: ChangeEvent<HTMLSelectElement>) => {
