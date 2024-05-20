@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-export const Page = () => {
+export const LoginPage = () => {
   return (
     <section className="max-w-6xl md:mx-auto mt-2 mb-8 md:my-28 mx-6">
       <h2 className="text-2xl font-semibold text-center mb-6">Iniciar Sesión</h2>
@@ -64,4 +64,4 @@ export const Page = () => {
   );
 };
 
-export default Page;
+export default LoginPage;
