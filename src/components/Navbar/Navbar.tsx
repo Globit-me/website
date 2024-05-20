@@ -46,8 +46,8 @@ const Navbar = () => {
       </div>
 
       <div className="flex-row gap-8 items-center hidden md:flex">
-        <NavLink href="/" className="font-semibold text-custom-blue">Iniciar sesión</NavLink>
-        <NavLink href="/" className="font-semibold text-custom-blue">Registrarse</NavLink>
+        <NavLink href="/login" className="font-semibold text-custom-blue">Iniciar sesión</NavLink>
+        <NavLink href="/register" className="font-semibold text-custom-blue">Registrarse</NavLink>
         <Selector />
       </div>
     </nav>
