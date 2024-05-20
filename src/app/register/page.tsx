@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-export const Register = () => {
+export const Page = () => {
   return (
     <section className="max-w-6xl mx-auto md:mx-auto mt-2 mb-8 md:my-28 mx-6">
       <h2 className="text-2xl font-semibold text-center mb-6">Regístrate</h2>
@@ -67,4 +67,4 @@ export const Register = () => {
   );
 };
 
-export default Register;
+export default Page;
