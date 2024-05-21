@@ -10,6 +10,8 @@ import { useState, useTransition } from "react";
 import { RegisterSchema } from "@/schemas";
 import { z } from "zod";
 import { registration } from "@/actions/registration";
+import { FormError } from "@/components/form/form-error";
+import { FormSuccess } from "@/components/form/form-success";
 
 
 const RegisterPage = () => {
@@ -72,6 +74,8 @@ const RegisterPage = () => {
           register={register('repassword')}
           error={errors.repassword?.message}
         />
+        <FormError message={error} />
+        <FormSuccess message={success} />
         <CustomButton type="submit">Registrarse</CustomButton>
       </form>
       <div className="mt-6 text-center">
