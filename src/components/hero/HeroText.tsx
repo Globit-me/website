@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-const AnimatedTitle = () => {
+const HeroText = () => {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -57,4 +57,4 @@ const AnimatedTitle = () => {
   );
 };
 
-export default AnimatedTitle;
+export default HeroText;
