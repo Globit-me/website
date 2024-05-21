@@ -6,19 +6,19 @@ import InputField from "@/components/form/InputField";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import { RegisterSchema } from "@/schemas";
 import { z } from "zod";
 import { registration } from "@/actions/registration";
-import { FormError } from "@/components/form/form-error";
-import { FormSuccess } from "@/components/form/form-success";
-
+import toast from "react-hot-toast";
 
 const RegisterPage = () => {
-  const [error, setError] = useState<string | undefined>("");
-  const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
-  const { register, handleSubmit, formState: { errors } } = useForm<z.infer<typeof RegisterSchema>>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
       name: "",
@@ -29,14 +29,15 @@ const RegisterPage = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
-    setError("");
-    setSuccess("");
     startTransition(() => {
-      registration(values)
-        .then((response) => {
-          setSuccess(response?.success);
-          setError(response?.error)
-        });
+      registration(values).then((response) => {
+        if (response?.success) {
+          toast.success(response.success);
+        }
+        if (response?.error) {
+          toast.error(response.error);
+        }
+      });
     });
   };
 
@@ -48,34 +49,30 @@ const RegisterPage = () => {
           type="text"
           id="name"
           label="Nombre"
-          register={register('name')}
+          register={register("name")}
           error={errors.name?.message}
-
         />
         <InputField
           type="email"
           id="email"
           label="Correo Electrónico"
-          register={register('email')}
+          register={register("email")}
           error={errors.email?.message}
-
         />
         <InputField
           type="password"
           id="password"
           label="Contraseña"
-          register={register('password')}
+          register={register("password")}
           error={errors.password?.message}
         />
         <InputField
           type="password"
           id="re-password"
           label="Confirmar Contraseña"
-          register={register('repassword')}
+          register={register("repassword")}
           error={errors.repassword?.message}
         />
-        <FormError message={error} />
-        <FormSuccess message={success} />
         <CustomButton type="submit">Registrarse</CustomButton>
       </form>
       <div className="mt-6 text-center">

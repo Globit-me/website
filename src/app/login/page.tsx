@@ -3,43 +3,44 @@
 import InputField from "@/components/form/InputField";
 import AnimatedTitle from "@/components/form/AnimatedTitle";
 import CustomButton from "@/components/form/CustomButton";
-import { FormError } from "@/components/form/form-error";
-import { FormSuccess } from "@/components/form/form-success";
 
 import { z } from "zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { useState, useTransition } from "react";
+import {  useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { LoginSchema } from "@/schemas";
 import { login } from "@/actions/login";
-
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
   const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState<string | undefined>("");
-  const [success, setSuccess] = useState<string | undefined>("");
 
-  const { register, handleSubmit, formState: { errors } } = useForm<z.infer<typeof LoginSchema>>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: "",
-      password: ""
+      password: "",
     },
   });
 
   const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
-    setError("");
-    setSuccess("");
     startTransition(() => {
-      login(values)
-        .then((response) => {
-          setSuccess(response?.success);
-          setError(response?.error);
-        });
+      login(values).then((response) => {
+        if (response?.success) {
+          toast.success(response.success);
+        }
+        if (response?.error) {
+          toast.error(response.error);
+        }
+      });
     });
-  }
+  };
 
   return (
     <section className="max-w-6xl md:mx-auto mt-28 mb-8 md:mb-28 md:mt-56 mx-6">
@@ -49,7 +50,7 @@ const LoginPage = () => {
           type="email"
           id="email"
           label="Correo Electrónico"
-          register={register('email')} 
+          register={register("email")}
           error={errors.email?.message}
           disabled={isPending}
         />
@@ -57,7 +58,7 @@ const LoginPage = () => {
           type="password"
           id="password"
           label="Contraseña"
-          register={register('password')} 
+          register={register("password")}
           disabled={isPending}
           error={errors.password?.message}
         />
@@ -84,8 +85,6 @@ const LoginPage = () => {
             </Link>
           </div>
         </div>
-        <FormError message={error} />
-        <FormSuccess message={success} />
         <CustomButton type="submit">Iniciar Sesión</CustomButton>
       </form>
       <div className="mt-6 text-center">
