@@ -6,7 +6,7 @@ import CustomButton from "@/components/form/CustomButton";
 import { FormError } from "@/components/form/form-error";
 import { FormSuccess } from "@/components/form/form-success";
 
-import { set, z } from "zod";
+import { z } from "zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useState, useTransition } from "react";
@@ -35,8 +35,8 @@ const LoginPage = () => {
     startTransition(() => {
       login(values)
         .then((response) => {
-          setSuccess(response.success);
-          setError(response.error);
+          setSuccess(response?.success);
+          setError(response?.error);
         });
     });
   }

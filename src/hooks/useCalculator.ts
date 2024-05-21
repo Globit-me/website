@@ -1,4 +1,3 @@
-// useCalculator.ts
 import { useState, ChangeEvent, useCallback } from 'react';
 import { Bank } from '../types/Calculator'; 
 

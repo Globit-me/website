@@ -34,8 +34,8 @@ const RegisterPage = () => {
     startTransition(() => {
       registration(values)
         .then((response) => {
-          setSuccess(response.success);
-          setError(response.error)
+          setSuccess(response?.success);
+          setError(response?.error)
         });
     });
   };

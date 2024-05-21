@@ -3,3 +3,15 @@ datasource db {
   url = env("POSTGRES_PRISMA_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id   Int     @id @default(autoincrement())
+  email String  @unique
+  name  String
+  password String
+  createdAt DateTime @default(now())
+}

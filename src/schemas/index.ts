@@ -17,10 +17,10 @@ export const RegisterSchema = z.object({
         message: "Correo inválido" 
     }),
     password: z.string().min(6, { 
-        message: "Minimo de 6 caracteres" 
+        message: "Mínimo de 6 caracteres" 
     }),
     repassword: z.string().min(6, {
-        message: "Minimo de 6 caracteres"
+        message: "Mínimo de 6 caracteres"
     })
 }).refine(data => data.password === data.repassword, {
     message: "Las contraseñas no coinciden",

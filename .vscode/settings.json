@@ -1,7 +1,12 @@
 {
     "cSpell.words": [
         "ASAEDE",
+        "autoincrement",
+        "datasource",
         "globit",
-        "politicas"
+        "hookform",
+        "politicas",
+        "postgresql",
+        "repassword"
     ]
 }
