@@ -11,7 +11,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
 
   return (
-    <section className="max-w-6xl md:mx-auto mt-2 mb-8 md:my-28 mx-6">
+    <section className="max-w-6xl md:mx-auto mt-28 mb-8 md:mb-28 md:mt-56 mx-6">
       <AnimatedTitle title="Iniciar sesión" />
       <form className="space-y-6">
         <InputField

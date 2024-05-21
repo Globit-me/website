@@ -15,7 +15,7 @@ const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ title }) => {
         initial="hidden"
         animate="visible"
         variants={itemVariants}
-        className="md:text-3xl text-xl font-semibold text-center mb-6"
+        className="md:text-3xl text-xl font-semibold text-center mb-12"
       >
         {title}
       </motion.h2>

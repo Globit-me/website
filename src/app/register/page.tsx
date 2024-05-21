@@ -13,7 +13,7 @@ const RegisterPage = () => {
   const [rePassword, setRePassword] = useState("");
 
   return (
-    <section className="max-w-6xl md:mx-auto mt-2 mb-8 md:my-28 mx-6">
+    <section className="max-w-6xl md:mx-auto mt-28 mb-8 md:mb-28 md:mt-56 mx-6">
       <AnimatedTitle title="Registrarse" />
       <form className="space-y-6">
         <InputField
