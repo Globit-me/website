@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
 import RotatingButton from "./RotatingButton";
 import AmountInput from "./AmountInput";
 import BankSelect from "./BankSelect";
-import { Bank } from "../../../types/Calculator";
+import { Bank } from "../../types/Calculator";
 import { useCalculator } from "@/hooks/useCalculator";
 
 const banks: Bank[] = [

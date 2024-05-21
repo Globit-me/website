@@ -4,20 +4,21 @@ interface InputFieldProps {
   type: string;
   id: string;
   label: string;
-  value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  register: any;
+  error: string | undefined;
+  disabled?: boolean;
 }
 
-const InputField: FC<InputFieldProps> = ({ type, id, label, value, onChange }) => {
+const InputField: FC<InputFieldProps> = ({ type, id, label, register, error, disabled }) => {
   return (
     <div className="relative">
       <input
         type={type}
         id={id}
-        value={value}
-        onChange={onChange}
+       {...register}
+        disabled={disabled}
         placeholder=" "
-        className="peer block w-full border border-custom-blue rounded px-3 py-3 leading-tight focus:outline-none hover:ring-2 hover:ring-custom-blue focus:ring-2 focus:ring-custom-blue focus:border-custom-blue transition duration-300"
+        className={`peer block w-full border ${error ? 'border-red-500' : 'border-custom-blue'} rounded px-3 py-3 leading-tight focus:outline-none hover:ring-2 hover:ring-custom-blue focus:ring-2 focus:ring-custom-blue focus:border-custom-blue transition duration-300`}
       />
       <label
         htmlFor={id}
@@ -25,6 +26,7 @@ const InputField: FC<InputFieldProps> = ({ type, id, label, value, onChange }) =
       >
         {label}
       </label>
+      {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
     </div>
   );
 };

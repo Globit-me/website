@@ -1,32 +1,65 @@
 "use client";
 
-import Link from "next/link";
-import { useState } from "react";
 import InputField from "@/components/form/InputField";
 import AnimatedTitle from "@/components/form/AnimatedTitle";
 import CustomButton from "@/components/form/CustomButton";
+import { FormError } from "@/components/form/form-error";
+import { FormSuccess } from "@/components/form/form-success";
+
+import { set, z } from "zod";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { useState, useTransition } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { LoginSchema } from "@/schemas";
+import { login } from "@/actions/login";
+
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
+
+  const { register, handleSubmit, formState: { errors } } = useForm<z.infer<typeof LoginSchema>>({
+    resolver: zodResolver(LoginSchema),
+    defaultValues: {
+      email: "",
+      password: ""
+    },
+  });
+
+  const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
+    setError("");
+    setSuccess("");
+    startTransition(() => {
+      login(values)
+        .then((response) => {
+          setSuccess(response.success);
+          setError(response.error);
+        });
+    });
+  }
 
   return (
     <section className="max-w-6xl md:mx-auto mt-28 mb-8 md:mb-28 md:mt-56 mx-6">
       <AnimatedTitle title="Iniciar sesión" />
-      <form className="space-y-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <InputField
           type="email"
           id="email"
           label="Correo Electrónico"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          register={register('email')} 
+          error={errors.email?.message}
+          disabled={isPending}
         />
         <InputField
           type="password"
           id="password"
           label="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          register={register('password')} 
+          disabled={isPending}
+          error={errors.password?.message}
         />
         <div className="flex items-center justify-between">
           <div className="flex items-center">
@@ -51,6 +84,8 @@ const LoginPage = () => {
             </Link>
           </div>
         </div>
+        <FormError message={error} />
+        <FormSuccess message={success} />
         <CustomButton type="submit">Iniciar Sesión</CustomButton>
       </form>
       <div className="mt-6 text-center">

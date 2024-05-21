@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ColumnProps } from "../../../types/Footer";
+import { ColumnProps } from "../../types/Footer";
 
 const FooterColumn: React.FC<ColumnProps> = ({ title, links }) => (
   <div className="flex flex-col w-full md:w-1/4 space-y-2 items-center md:items-start">

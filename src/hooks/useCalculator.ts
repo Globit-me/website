@@ -1,6 +1,6 @@
 // useCalculator.ts
 import { useState, ChangeEvent, useCallback } from 'react';
-import { Bank } from '../../types/Calculator'; 
+import { Bank } from '../types/Calculator'; 
 
 const numberRegex = /^\d*\.?\d*$/
 

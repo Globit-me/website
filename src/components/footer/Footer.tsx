@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ColumnProps } from "../../../types/Footer";
+import { ColumnProps } from "../../types/Footer";
 import FooterColumn from "./FooterColumn";
 import SocialIcon from "./SocialIcon";
 import Link from "next/link";

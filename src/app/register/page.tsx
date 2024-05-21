@@ -4,45 +4,73 @@ import AnimatedTitle from "@/components/form/AnimatedTitle";
 import CustomButton from "@/components/form/CustomButton";
 import InputField from "@/components/form/InputField";
 import Link from "next/link";
-import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useState, useTransition } from "react";
+import { RegisterSchema } from "@/schemas";
+import { z } from "zod";
+import { registration } from "@/actions/registration";
+
 
 const RegisterPage = () => {
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-  const [rePassword, setRePassword] = useState("");
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
+  const [isPending, startTransition] = useTransition();
+  const { register, handleSubmit, formState: { errors } } = useForm<z.infer<typeof RegisterSchema>>({
+    resolver: zodResolver(RegisterSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      repassword: "",
+    },
+  });
+
+  const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
+    setError("");
+    setSuccess("");
+    startTransition(() => {
+      registration(values)
+        .then((response) => {
+          setSuccess(response.success);
+          setError(response.error)
+        });
+    });
+  };
 
   return (
     <section className="max-w-6xl md:mx-auto mt-28 mb-8 md:mb-28 md:mt-56 mx-6">
       <AnimatedTitle title="Registrarse" />
-      <form className="space-y-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <InputField
           type="text"
           id="name"
           label="Nombre"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          register={register('name')}
+          error={errors.name?.message}
+
         />
         <InputField
           type="email"
           id="email"
           label="Correo Electrónico"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          register={register('email')}
+          error={errors.email?.message}
+
         />
         <InputField
           type="password"
           id="password"
           label="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          register={register('password')}
+          error={errors.password?.message}
         />
         <InputField
           type="password"
           id="re-password"
           label="Confirmar Contraseña"
-          value={rePassword}
-          onChange={(e) => setRePassword(e.target.value)}
+          register={register('repassword')}
+          error={errors.repassword?.message}
         />
         <CustomButton type="submit">Registrarse</CustomButton>
       </form>
