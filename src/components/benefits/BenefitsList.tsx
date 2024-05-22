@@ -38,7 +38,7 @@ const benefits = [
 
 const BenefitsList: React.FC = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-12">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 place-content-between mt-12">
       {benefits.map((benefit, index) => (
         <BenefitItem
           key={index}
