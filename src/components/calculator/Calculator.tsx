@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
+import React from "react";
 import RotatingButton from "./RotatingButton";
 import AmountInput from "./AmountInput";
 import BankSelect from "./BankSelect";
 import { Bank } from "../../types/Calculator";
 import { useCalculator } from "@/hooks/useCalculator";
+import InfoTooltip from "./InfoTooltip";
 
 const banks: Bank[] = [
   { name: "Payoneer", currency: "USD", exchangeRate: 1 },
@@ -23,7 +24,7 @@ const Calculator = () => {
     handleSwitchBanks,
     handleAmountChange,
   } = useCalculator(banks);
-  
+
   return (
     <div className="flex flex-col md:flex-1 items-center justify-center my-8 md:my-0 border-4">
       <div className="bg-white shadow-md rounded px-4 py-6 md:px-8 md:pt-6 md:pb-8 flex flex-col w-full">
@@ -55,17 +56,16 @@ const Calculator = () => {
             onChange={handleToBankChange}
           />
         </div>
-        <div className="mt-2 flex flex-col md:flex-row items-center w-full">
+        <div className="mt-2 flex flex-row items-center w-full">
           <button
-            onClick={() => { console.log("Button Clicked") }}
-            className="bg-custom-blue text-white font-bold py-2 px-4 rounded w-full md:w-1/2 hover:scale-105 transition duration-300"
-          >
+            onClick={() => {
+              console.log("Button Clicked");
+            }}
+            className="bg-custom-blue text-white font-bold py-2 px-4 rounded w-full md:w-8/12 hover:scale-105 transition duration-300"
+          > 
             Solicita tu envío
           </button>
-          <div className="text-xs space-y-1 leading-tight mt-2 md:mt-0 md:ml-4 text-gray-500 text-center md:text-left">
-            <p>Comisiones y gastos: 6% + 10 USD.</p>
-            <p>48 horas hábiles al recibir el pago.</p>
-          </div>
+          <InfoTooltip />
         </div>
       </div>
     </div>
