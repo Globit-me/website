@@ -5,9 +5,8 @@ import { LoginSchema } from "@/schemas";
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(values);
-
   if (!validatedFields.success) {
-    return { error: "Invalid Fields" };
+    return { error: validatedFields.error.errors[0].message };
   }
-  return { success: "Email sent" };
+
 };
