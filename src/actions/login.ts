@@ -2,32 +2,38 @@
 
 import * as z from "zod";
 import { LoginSchema } from "@/schemas";
-import bcrypt from "bcrypt";
-import { db } from "@/lib/db";
+import { signIn } from "@/auth";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { AuthError } from "next-auth";
+
+type ErrorType = "CredentialsSignin" | "default";
+
+const errorMessages: Record<ErrorType, string> = {
+  CredentialsSignin: "Credenciales Invalidas. Por favor, intentelo de nuevo.",
+  default: "Ha ocurrido un error. Por favor, intentelo de nuevo.",
+}
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(values);
   if (!validatedFields.success) {
-    return { error: validatedFields.error.errors[0].message };
+    return { error: "Los datos son incorrectos. Por favor, intentelo de nuevo." };
   }
 
   const { email, password } = validatedFields.data;
 
-  const user = await db.user.findUnique({
-    where: { email },
-  });
-  
-  if (!user) {
-    return { error: "Usuario no encontrado" };
-  }
-  
-  if(user.password){
-    const match = await bcrypt.compare(password, user.password);
-    if (match) {
-      return { success: "Usuario logueado" };
-    } else {
-      return { error: "Contraseña incorrecta" };
-    }    
-  }
+  try {
+    await signIn("credentials", {
+      email,
+      password,
+      redirectTo: DEFAULT_LOGIN_REDIRECT,
+    });
+  } catch (error) {
+    if (error instanceof AuthError) {
+      const errorMessage = errorMessages[error.type as ErrorType] || errorMessages.default;
+      return { error: errorMessage };
+    }
 
+    throw error; //prevents a bug, otherwise the will not redirect
+  }
+  
 };

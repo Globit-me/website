@@ -30,7 +30,10 @@ export const createUsers = async (): Promise<void> => {
 
   for (const user of users) {
     await db.user.create({
-      data: user,
+      data: {
+        email: user.email,
+        password: user.password,
+      },
     });
   }
 };
