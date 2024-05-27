@@ -71,7 +71,7 @@ export default function SectionFAQs() {
           </AccordionTrigger>
           <AccordionContent className="text-gray-600">
             Puedes ver el historial de tus transacciones en tu perfil, bajo la
-            sección "Historial".
+            sección &quot;Historial&quot;.
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-8">
