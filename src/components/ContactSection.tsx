@@ -8,7 +8,7 @@ const ContactSection = async () => {
 
   return (
     <section className="mb-24 mx-6 md:mb-40 md:mx-0">
-      <h2 className="text-2xl md:text-3xl font-bold text-custom-blue mb-6 md:mb-10 text-center">
+      <h2 className="text-2xl md:text-3xl font-bold text-custom-blue mb-6 md:mb-8 text-center">
         Contáctenos
       </h2>
       <form action={handleContact} className="max-w-3xl mx-auto">
