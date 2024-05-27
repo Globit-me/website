@@ -42,7 +42,7 @@ const Navbar = () => {
                 />
               </Link>
             </header>
-            <NavLink href="/">Programa de referidos</NavLink>
+            <NavLink href="/questions">Preguntas frecuentes</NavLink>
             <NavLink href="/">Garantía</NavLink>
           </div>
         </div>
