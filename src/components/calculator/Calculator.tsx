@@ -61,7 +61,7 @@ const Calculator = () => {
             onClick={() => {
               console.log("Button Clicked");
             }}
-            className="bg-custom-blue text-white font-bold py-2 px-4 rounded w-full md:w-8/12 hover:scale-105 transition duration-300"
+            className="bg-custom-blue text-white font-bold py-2 px-4 rounded w-full md:w-8/12 hover:bg-custom-blue-dark transition duration-300"
           > 
             Solicita tu envío
           </button>

@@ -8,7 +8,7 @@ const CustomButton: FC<CustomButtonProps> = ({ children, ...props }) => {
   return (
     <button
       {...props}
-      className="w-full flex justify-center py-2 px-4 border rounded font-bold text-white bg-custom-blue hover:scale-105 transition duration-300"
+      className="w-full flex justify-center py-2 px-4 border rounded font-bold text-white bg-custom-blue hover:bg-custom-blue-dark transition duration-300"
     >
       {children}
     </button>
