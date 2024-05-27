@@ -33,7 +33,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
       return { error: errorMessage };
     }
 
-    throw error; //prevents a bug, otherwise the will not redirect
+    throw error; //prevents a bug, otherwise will not redirect the user
   }
   
 };

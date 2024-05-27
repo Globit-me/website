@@ -36,6 +36,10 @@ export default auth((req) => {
 })
 
 export const config = {
-    //regular expression from clerk
+    /**
+     * The RegEx pattern to match every single route in the application 
+     * so the middleware can be applied to all routes and then selectively
+     * apply the logic based on the route
+     */
     matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
 }
