@@ -1,4 +1,5 @@
 import BenefitsSection from "@/components/benefits/BenefitsSection";
+import ContactSection from "@/components/ContactSection";
 import Hero from "@/components/hero/Hero";
 import ImageCarousel from "@/components/ImageCarousel";
 import SectionFAQs from "@/components/SectionFAQs";
@@ -11,6 +12,7 @@ export default function Home() {
     <ImageCarousel />
     <BenefitsSection />
     <SectionFAQs />
+    <ContactSection />
     <SpeedInsights />
   </main>);
 }
