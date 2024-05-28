@@ -46,7 +46,7 @@ const Calculator = () => {
         <div className="mb-0 md:mb-4 flex flex-col md:flex-row items-center">
           <AmountInput
             label={`Recibes ${toBank.currency}`}
-            amount={Number(exchangedAmount.toFixed(2))}
+            amount={exchangedAmount}
             onChange={() => {}}
             readOnly
           />
