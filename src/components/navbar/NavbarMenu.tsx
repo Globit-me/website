@@ -10,6 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Link from "next/link";
 
 export function NavbarMenu() {
   const session = false;
@@ -43,11 +44,11 @@ export function NavbarMenu() {
             <>
               <DropdownMenuItem>
                 <LogIn className="mr-2 h-4 w-4" />
-                <span>Iniciar sesión</span>
+                <Link href="/login">Iniciar Sesión</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <UserPlus className="mr-2 h-4 w-4" />
-                <span>Registrarse</span>
+                <Link href="/register">Registrarse</Link>
               </DropdownMenuItem>
             </>
           )}
