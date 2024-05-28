@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useCallback } from 'react';
+import { useState, ChangeEvent, useCallback, useEffect, useMemo } from 'react';
 import { Bank } from '../types/Calculator'; 
 
 const numberRegex = /^\d*\.?\d*$/
@@ -7,24 +7,34 @@ export const useCalculator = (banks: Bank[]) => {
   const [fromBank, setFromBank] = useState(banks[0]);
   const [toBank, setToBank] = useState(banks[1]);
   const [amount, setAmount] = useState(0);
-  const [exchangedAmount, setExchangedAmount] = useState(0);
+  //const [exchangedAmount, setExchangedAmount] = useState(0);
+
+  // useEffect(() => {
+  //   if (fromBank && toBank) {
+  //     const exchangedAmount = (amount * fromBank.exchangeRate) / toBank.exchangeRate;
+  //     setExchangedAmount(exchangedAmount);
+  //   }
+  // }, [fromBank, toBank, amount]);
+
+  const exchangedAmount = useMemo(() => {
+    if (fromBank && toBank) {
+      return (amount * fromBank.exchangeRate) / toBank.exchangeRate;
+    }
+    return 0;
+  }, [fromBank, toBank, amount]);
 
   const calculateExchange = useCallback(
     (() => {
       let timeoutId: NodeJS.Timeout;
-
+  
       return (amount: number) => {
         clearTimeout(timeoutId);
         timeoutId = setTimeout(() => {
-          if (fromBank && toBank) {
-            const exchangedAmount =
-              (amount * fromBank.exchangeRate) / toBank.exchangeRate;
-            setExchangedAmount(exchangedAmount);
-          }
+          setAmount(amount);
         }, 700);
       };
     })(),
-    [fromBank, toBank]
+    []
   );
 
   const handleFromBankChange = (e: ChangeEvent<HTMLSelectElement>) => {
