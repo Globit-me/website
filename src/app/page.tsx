@@ -1,5 +1,5 @@
 import BenefitsSection from "@/components/benefits/BenefitsSection";
-import ContactSection from "@/components/ContactSection";
+import ContactSection from "@/components/contact/ContactSection";
 import Hero from "@/components/hero/Hero";
 import ImageCarousel from "@/components/ImageCarousel";
 import SectionFAQs from "@/components/SectionFAQs";
