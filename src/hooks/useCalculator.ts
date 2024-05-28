@@ -18,7 +18,7 @@ export const useCalculator = (banks: Bank[]) => {
 
   const exchangedAmount = useMemo(() => {
     if (fromBank && toBank) {
-      return (amount * fromBank.exchangeRate) / toBank.exchangeRate;
+      return Number(((amount * fromBank.exchangeRate) / toBank.exchangeRate).toFixed(2));
     }
     return 0;
   }, [fromBank, toBank, amount]);
