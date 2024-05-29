@@ -30,7 +30,7 @@ const ContactSection = () => {
           <h2 className="text-2xl md:text-3xl font-bold text-custom-blue mb-6 md:mb-14 text-center">
             Contáctenos
           </h2>
-          <div className="flex flex-col md:flex-row md:justify-between mb-0 md:mb-6">
+          <div className="flex flex-col md:flex-row md:justify-between mb-0 md:mb-6 space-x-0 md:space-x-3">
             <InputField
               id="name"
               name="name"
