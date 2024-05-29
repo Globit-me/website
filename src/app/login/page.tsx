@@ -13,6 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "@/schemas";
 import { login } from "@/actions/login";
 import toast from "react-hot-toast";
+import Social from "@/components/social/social";
 
 const LoginPage = () => {
   const [isPending, startTransition] = useTransition();
@@ -62,6 +63,7 @@ const LoginPage = () => {
           disabled={isPending}
           error={errors.password?.message}
         />
+        
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <input
@@ -97,6 +99,11 @@ const LoginPage = () => {
             Regístrate
           </Link>
         </p>
+        <div className="flex items-center justify-center my-4">
+          <hr className="border-gray-300 border-t w-full relative my-2" />
+          <div className="absolute bg-white px-2 text-gray-500">o</div>
+        </div>
+        <Social />
       </div>
     </section>
   );
