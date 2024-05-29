@@ -1,3 +1,5 @@
+"use client"
+
 import { motion } from 'framer-motion'
 
 type AnimatedTitleProps = {
@@ -11,14 +13,14 @@ const itemVariants = {
 
 const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ title }) => {
   return (
-    <motion.h2
+    <motion.h1
         initial="hidden"
         animate="visible"
         variants={itemVariants}
         className="md:text-3xl text-xl font-semibold text-center mb-12"
       >
         {title}
-      </motion.h2>
+      </motion.h1>
   )
 }
 
