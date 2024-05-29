@@ -15,6 +15,7 @@ export const sendEmail = async (formData: FormData) => {
     from: "onboarding@resend.dev",
     to: "desarrolloglobit@gmail.com",
     subject: subject,
+    reply_to: formData.get("email") as string,
     text: formData.get("message") as string,
   });
 
