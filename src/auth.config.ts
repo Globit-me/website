@@ -1,6 +1,7 @@
 import type { NextAuthConfig } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import Google from "next-auth/providers/google"
+import Apple from "next-auth/providers/apple"
 import bcrypt from "bcryptjs";
 
 import { LoginSchema } from "@/schemas";
@@ -8,6 +9,10 @@ import { getUserByEmail } from "@/data/user";
  
 export default { 
     providers: [
+        Apple({
+            clientId: process.env.APPLE_CLIENT_ID,
+            clientSecret: process.env.APPLE_CLIENT_SECRET,
+        }),
         Google({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,

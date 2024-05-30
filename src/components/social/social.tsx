@@ -16,7 +16,7 @@ const Social = () => {
     <div className="flex flex-col items-center w-full gap-y-2">
         <Button
             size="lg"
-            className="w-full flex items-center justify-start"
+            className="w-full flex items-center justify-start border border-gray-400"
             variant="outline"
             onClick={() => onClick("google")}
         >
@@ -25,7 +25,7 @@ const Social = () => {
         </Button>
         <Button
             size="lg"
-            className="w-full flex items-center justify-start"
+            className="w-full flex items-center justify-start border border-gray-400"
             variant="outline"
             onClick={() => {}}
         >

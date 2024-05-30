@@ -44,7 +44,7 @@ const LoginPage = () => {
   };
 
   return (
-    <section className="max-w-6xl md:mx-auto mt-28 mb-8 md:mb-28 md:mt-56 mx-6">
+    <section className="max-w-6xl md:mx-auto mt-28 mb-8 mx-6 h-screen">
       <AnimatedTitle title="Iniciar sesión" />
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <InputField
@@ -100,7 +100,7 @@ const LoginPage = () => {
           </Link>
         </p>
         <div className="flex items-center justify-center my-4">
-          <hr className="border-gray-300 border-t w-full relative my-2" />
+          <hr className="border-gray-400 border-t w-full relative my-2" />
           <div className="absolute bg-white px-2 text-gray-500">o</div>
         </div>
         <Social />
