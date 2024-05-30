@@ -1,23 +1,15 @@
-import { Order } from "@/types/order";
 import Image from "next/image";
 import React, { useState } from "react";
 import Modal from "react-modal";
+import { User } from "@/types/user";
 
-interface OrderItemProps {
-  order: Order;
-  onClose?: (id: number) => void;
-  onReject?: (id: number) => void;
-  onRevert?: (id: number) => void;
-  isRecent?: boolean;
+interface DNIItemProps {
+  user: User;
+  onApprove: (id: number) => void;
+  onReject: (id: number) => void;
 }
 
-const OrderItem: React.FC<OrderItemProps> = ({
-  order,
-  onClose,
-  onReject,
-  onRevert,
-  isRecent,
-}) => {
+const DNIItem: React.FC<DNIItemProps> = ({ user, onApprove, onReject }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -31,40 +23,23 @@ const OrderItem: React.FC<OrderItemProps> = ({
 
   return (
     <div className="p-4 mb-4 bg-white rounded shadow">
-      <h3 className="text-lg font-bold">Orden #{order.id}</h3>
-      <p className="text-sm">Cliente: {order.clientName}</p>
-      <p className="text-sm">
-        Estado:{" "}
-        {order.status === "Cerrada"
-          ? "Cerrada"
-          : order.status === "Rechazada"
-          ? "Rechazada"
-          : "Abierta"}
-      </p>
-      {order.status === "Abierta" && !isRecent && (
-        <div className="flex space-x-2">
-          <button
-            className="mt-2 px-4 py-2 text-white bg-green-600 rounded"
-            onClick={() => onClose?.(order.id)}
-          >
-            Cerrar
-          </button>
-          <button
-            className="mt-2 px-4 py-2 text-white bg-red-600 rounded"
-            onClick={() => onReject?.(order.id)}
-          >
-            Rechazar
-          </button>
-        </div>
-      )}
-      {isRecent && order.status !== "Abierta" && (
+      <h3 className="text-lg font-bold">Usuario #{user.id}</h3>
+      <p className="text-sm">Nombre: {user.name}</p>
+      <p className="text-sm">Email: {user.email}</p>
+      <div className="flex space-x-2">
         <button
-          className="mt-2 px-4 py-2 text-white bg-yellow-600 rounded mr-2"
-          onClick={() => onRevert?.(order.id)}
+          className="mt-2 px-4 py-2 text-white bg-green-600 rounded"
+          onClick={() => onApprove(user.id)}
         >
-          Revertir Decisión
+          Aprobar
         </button>
-      )}
+        <button
+          className="mt-2 px-4 py-2 text-white bg-red-600 rounded"
+          onClick={() => onReject(user.id)}
+        >
+          Rechazar
+        </button>
+      </div>
       <button
         className="mt-2 px-4 py-2 text-white bg-blue-600 rounded"
         onClick={() => setShowDetails(!showDetails)}
@@ -75,16 +50,13 @@ const OrderItem: React.FC<OrderItemProps> = ({
       {showDetails && (
         <div className="mt-4 p-4 bg-gray-100 rounded">
           <p>
-            <strong>DNI:</strong> {order.clientDNI}
+            <strong>DNI:</strong> {user.dni}
           </p>
           <p>
-            <strong>Nombre:</strong> {order.clientName}
+            <strong>Fecha de Nacimiento:</strong> {user.dob}
           </p>
           <p>
-            <strong>Fecha de Nacimiento:</strong> {order.clientDOB}
-          </p>
-          <p>
-            <strong>Domicilio:</strong> {order.clientAddress}
+            <strong>Domicilio:</strong> {user.address}
           </p>
           <button
             className="mt-2 px-4 py-2 text-white bg-custom-blue rounded"
@@ -109,7 +81,7 @@ const OrderItem: React.FC<OrderItemProps> = ({
               </button>
               <div className="relative w-full h-auto">
                 <Image
-                  src={order.clientImage}
+                  src={user.dniImage}
                   alt="Large view"
                   width={800}
                   height={800}
@@ -124,4 +96,4 @@ const OrderItem: React.FC<OrderItemProps> = ({
   );
 };
 
-export default OrderItem;
+export default DNIItem;
