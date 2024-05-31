@@ -9,9 +9,9 @@ const Social = () => {
     const onClick = (provider: "google" | "apple") => {
         signIn(provider, {
             callbackUrl: DEFAULT_LOGIN_REDIRECT,
-
         })
     }
+
   return (
     <div className="flex flex-col items-center w-full gap-y-2">
         <Button

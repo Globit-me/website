@@ -1,50 +1,51 @@
 "use client";
 
-import InputField from "@/components/form/InputField";
-import AnimatedTitle from "@/components/form/AnimatedTitle";
-import CustomButton from "@/components/form/CustomButton";
+//Custom Components
+import {
+  AnimatedTitle,
+  CustomButton,
+  InputField,
+  Social,
+  ToastError,
+  ToastSuccess,
+} from "@/components"
 
+//Schemas
+import { LoginSchema } from "@/schemas";
+
+//Actions
+import { login } from "@/actions";
+
+//Hooks
+import {
+  useAuthMessage, 
+  useOAuthError, 
+  useLoginForm
+} from "@/hooks";
+
+//dependencies
 import { z } from "zod";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
-import {  useTransition } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useTransition } from "react";
 
-import { LoginSchema } from "@/schemas";
-import { login } from "@/actions/login";
-import toast from "react-hot-toast";
-import Social from "@/components/social/social";
 
 const LoginPage = () => {
+  const { successMessage, errorMessage, handleResponse } = useAuthMessage();
+  const errorParam = useOAuthError();
+  const { register, errors, handleSubmit } = useLoginForm();
   const [isPending, startTransition] = useTransition();
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
 
   const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
     startTransition(() => {
-      login(values).then((response) => {
-        if (response?.success) {
-          toast.success(response.success);
-        }
-        if (response?.error) {
-          toast.error(response.error);
-        }
-      });
-    });
+      handleResponse(values, login)
+    })
   };
 
   return (
     <section className="max-w-6xl md:mx-auto mt-28 mb-8 mx-6 h-screen">
+      <ToastError message={errorParam} />
+      <ToastError message={errorMessage} />
+      <ToastSuccess message={successMessage} />
       <AnimatedTitle title="Iniciar sesión" />
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <InputField

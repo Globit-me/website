@@ -7,14 +7,6 @@ export const useCalculator = (banks: Bank[]) => {
   const [fromBank, setFromBank] = useState(banks[0]);
   const [toBank, setToBank] = useState(banks[1]);
   const [amount, setAmount] = useState(0);
-  //const [exchangedAmount, setExchangedAmount] = useState(0);
-
-  // useEffect(() => {
-  //   if (fromBank && toBank) {
-  //     const exchangedAmount = (amount * fromBank.exchangeRate) / toBank.exchangeRate;
-  //     setExchangedAmount(exchangedAmount);
-  //   }
-  // }, [fromBank, toBank, amount]);
 
   const exchangedAmount = useMemo(() => {
     if (fromBank && toBank) {

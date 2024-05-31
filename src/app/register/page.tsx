@@ -1,48 +1,47 @@
 "use client";
 
-import AnimatedTitle from "@/components/form/AnimatedTitle";
-import CustomButton from "@/components/form/CustomButton";
-import InputField from "@/components/form/InputField";
-import Link from "next/link";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useTransition } from "react";
+//Custom Components
+import {
+  AnimatedTitle,
+  CustomButton,
+  InputField,
+  ToastSuccess,
+  ToastError,
+} from "@/components"
+
+//Schemas
 import { RegisterSchema } from "@/schemas";
-import { z } from "zod";
+
+//Actions
 import { registration } from "@/actions/registration";
-import toast from "react-hot-toast";
+
+//Hooks
+import {
+  useAuthMessage,
+  useRegisterForm,
+} from "@/hooks"
+
+
+//dependencies
+import { z } from "zod";
+import Link from "next/link";
+import { useTransition } from "react";
 
 const RegisterPage = () => {
   const [isPending, startTransition] = useTransition();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<z.infer<typeof RegisterSchema>>({
-    resolver: zodResolver(RegisterSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      repassword: "",
-    },
-  });
-
+  const { successMessage, errorMessage, handleResponse } = useAuthMessage();
+  const { register, errors, handleSubmit } = useRegisterForm();
+ 
   const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
     startTransition(() => {
-      registration(values).then((response) => {
-        if (response?.success) {
-          toast.success(response.success);
-        }
-        if (response?.error) {
-          toast.error(response.error);
-        }
-      });
-    });
+      handleResponse(values, registration);
+    })
   };
 
   return (
-    <section className="max-w-6xl md:mx-auto mt-28 mb-8 md:mb-28 md:mt-56 mx-6">
+    <section className="flex flex-col max-w-6xl md:mx-auto mt-28 mb-8 md:mb-28 md:mt-56 mx-6">
+      <ToastError message={errorMessage} />
+      <ToastSuccess message={successMessage} />
       <AnimatedTitle title="Registrarse" />
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <InputField

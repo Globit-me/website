@@ -6,7 +6,7 @@ import { signIn } from "@/auth";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
 
-type ErrorType = "CredentialsSignin" | "default";
+type ErrorType = "CredentialsSignin" |  "default";
 
 const errorMessages: Record<ErrorType, string> = {
   CredentialsSignin: "Credenciales Invalidas. Por favor, intentelo de nuevo.",
