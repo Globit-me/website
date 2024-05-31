@@ -13,7 +13,7 @@ import {
 import { RegisterSchema } from "@/schemas";
 
 //Actions
-import { registration } from "@/actions/registration";
+import { registration } from "@/actions";
 
 //Hooks
 import {
