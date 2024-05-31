@@ -31,7 +31,7 @@ import { Suspense, useTransition } from "react";
 
 const LoginPage = () => {
   const { successMessage, errorMessage, handleResponse } = useAuthMessage();
-  const errorParam = useOAuthError();
+  //const errorParam = useOAuthError(); //This is not used, try to fix it later
   const { register, errors, handleSubmit } = useLoginForm();
   const [isPending, startTransition] = useTransition();
 
@@ -44,7 +44,7 @@ const LoginPage = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <section className="max-w-6xl md:mx-auto mt-28 mb-8 mx-6 h-screen">
-        <ToastError message={errorParam || errorMessage} />
+        <ToastError message={errorMessage} />
         <ToastSuccess message={successMessage} />
         <AnimatedTitle title="Iniciar sesión" />
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
