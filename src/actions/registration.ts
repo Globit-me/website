@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import { RegisterSchema } from "@/schemas";
 import { db } from "@/lib/db";
 import { getUserByEmail } from "@/data/user";
+import { generateVerificationToken } from "@/lib/tokens"; 
 
 export const registration = async (values: z.infer<typeof RegisterSchema>) => {
   const validatedFields = RegisterSchema.safeParse(values);
@@ -31,9 +32,10 @@ export const registration = async (values: z.infer<typeof RegisterSchema>) => {
         name,
       },
     });
+
+    const verificationToken = await generateVerificationToken(email);
+    return { success: "Mail de Confirmación Enviado!" }
   } catch (error: any) {
     return { error: "Error al crear el usuario. Por favor, inténtalo de nuevo."};
   }
-
-  return { success: "Usuario creado con éxito. Por favor, inicia sesión." };
 };
