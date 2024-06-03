@@ -18,7 +18,7 @@ export const ToastSuccess = ({ message }: FormErrorProps) => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -50 }}
                     transition={{ duration: 0.2 }}
-                    className="fixed top-24 md:mx-[25%] transform -translate-x-1/2 bg-white shadow-md text-lg p-4 space-x-2 rounded-md flex items-center"
+                    className="absolute md:left-1/4 -top-1/4 transform -translate-x-1/2 bg-white shadow-md text-lg p-4 space-x-2 rounded-md flex items-center"
                 >
                     <Check className="h-5 w-5 text-emerald-500" />
                     <span>{message}</span>

@@ -43,7 +43,7 @@ const LoginPage = () => {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <section className="max-w-6xl md:mx-auto mt-56 mb-56 mx-6">
+      <section className="relative max-w-6xl md:mx-auto mt-56 mb-56 mx-6">
         <ToastError message={errorMessage} />
         <ToastSuccess message={successMessage} />
         <AnimatedTitle title="Iniciar sesión" />
