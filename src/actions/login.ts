@@ -14,14 +14,14 @@ import { getUserByEmail } from "@/data/user";
 type ErrorType = "CredentialsSignin" |  "default";
 
 const errorMessages: Record<ErrorType, string> = {
-  CredentialsSignin: "Credenciales Invalidas. Por favor, intentelo de nuevo.",
-  default: "Ha ocurrido un error. Por favor, intentelo de nuevo.",
+  CredentialsSignin: "Credenciales Invalidas. Por favor, inténtelo de nuevo.",
+  default: "Ha ocurrido un error. Por favor, inténtelo de nuevo.",
 }
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(values);
   if (!validatedFields.success) {
-    return { error: "Los datos son incorrectos. Por favor, intentelo de nuevo." };
+    return { error: "Los datos son incorrectos. Por favor, inténtelo de nuevo." };
   }
 
   const { email, password } = validatedFields.data;
@@ -29,7 +29,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
   const existingUser = await getUserByEmail(email);
 
   if (!existingUser || !existingUser.email || !existingUser.password) {
-      return { error: "Este Email no existe. Por favor, intentelo de nuevo." };
+      return { error: "Este Email no existe. Por favor, inténtelo de nuevo." };
   }
   
   if (!existingUser.emailVerified) {
