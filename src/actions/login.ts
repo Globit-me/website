@@ -5,7 +5,10 @@ import { LoginSchema } from "@/schemas";
 import { signIn } from "@/auth";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
-import { generateVerificationToken } from "@/lib/tokens";
+import { 
+  generateVerificationToken,
+  sendVerificationEmail
+ } from "@/lib";
 import { getUserByEmail } from "@/data/user";
 
 type ErrorType = "CredentialsSignin" |  "default";
@@ -31,8 +34,12 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
   
   if (!existingUser.emailVerified) {
     const verificationToken = await generateVerificationToken(existingUser.email);
+    if (!verificationToken) return { error: "Error al generar el token de verificación." };
+    await sendVerificationEmail(verificationToken?.email,verificationToken.token);
     return { success: "Reenviando mail de confirmación." };
   }
+
+  
 
   try {
     await signIn("credentials", {
