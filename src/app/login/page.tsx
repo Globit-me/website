@@ -8,7 +8,7 @@ import {
   Social,
   ToastError,
   ToastSuccess,
-} from "@/components"
+} from "@/components";
 
 //Schemas
 import { LoginSchema } from "@/schemas";
@@ -17,17 +17,13 @@ import { LoginSchema } from "@/schemas";
 import { login } from "@/actions";
 
 //Hooks
-import {
-  useAuthMessage, 
-  useOAuthError, 
-  useLoginForm
-} from "@/hooks";
+import { useAuthMessage, useOAuthError, useLoginForm } from "@/hooks";
 
 //dependencies
 import { z } from "zod";
 import Link from "next/link";
 import { Suspense, useTransition } from "react";
-
+import Image from "next/image";
 
 const LoginPage = () => {
   const { successMessage, errorMessage, handleResponse } = useAuthMessage();
@@ -37,74 +33,65 @@ const LoginPage = () => {
 
   const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
     startTransition(() => {
-      handleResponse(values, login)
-    })
+      handleResponse(values, login);
+    });
   };
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <section className="relative max-w-6xl md:mx-auto mt-56 mb-56 mx-6">
-        <ToastError message={errorMessage} />
-        <ToastSuccess message={successMessage} />
-        <AnimatedTitle title="Iniciar sesión" />
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          <InputField
-            type="email"
-            id="email"
-            label="Correo Electrónico"
-            register={register("email")}
-            error={errors.email?.message}
-            disabled={isPending}
-          />
-          <InputField
-            type="password"
-            id="password"
-            label="Contraseña"
-            register={register("password")}
-            disabled={isPending}
-            error={errors.password?.message}
-          />
-          
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                id="remember-me"
-                type="checkbox"
-                className="h-4 w-4 text-custom-blue focus:ring-custom-blue border-gray-300 rounded"
-              />
-              <label
-                htmlFor="remember-me"
-                className="ml-2 block text-sm text-gray-900"
-              >
-                Recordar
-              </label>
-            </div>
-            <div className="text-sm">
+      <section className="relative max-w-6xl md:mx-auto mt-32 md:mt-56 mb-56 mx-6 grid grid-cols-1 md:grid-cols-2">
+        <div className="border-4 p-6">
+          <ToastError message={errorMessage} />
+          <ToastSuccess message={successMessage} />
+          <AnimatedTitle title="Iniciar sesión" />
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <InputField
+              type="email"
+              id="email"
+              label="Correo Electrónico"
+              register={register("email")}
+              error={errors.email?.message}
+              disabled={isPending}
+            />
+            <InputField
+              type="password"
+              id="password"
+              label="Contraseña"
+              register={register("password")}
+              disabled={isPending}
+              error={errors.password?.message}
+            />
+
+            <div className="flex items-center justify-end">
               <Link
                 href="#"
-                className="font-medium text-custom-blue hover:text-custom-blue-dark"
+                className="font-medium text-custom-blue hover:text-custom-blue-dark text-sm"
               >
                 ¿Olvidaste tu contraseña?
               </Link>
             </div>
+            <CustomButton type="submit">Iniciar Sesión</CustomButton>
+          </form>
+          <div className="mt-3 text-center">
+            <Social />
+            <p className="text-sm text-gray-700 mt-3">
+              ¿No tienes una cuenta?
+              <Link
+                href="/register"
+                className="ml-1 font-medium text-custom-blue hover:text-custom-blue-dark"
+              >
+                Regístrate
+              </Link>
+            </p>
           </div>
-          <CustomButton type="submit">Iniciar Sesión</CustomButton>
-        </form>
-        <div className="mt-6 text-center">
-          <p className="text-sm text-gray-700">
-            ¿No tienes una cuenta?
-            <Link
-              href="/register"
-              className="ml-1 font-medium text-custom-blue hover:text-custom-blue-dark"
-            >
-              Regístrate
-            </Link>
-          </p>
-          <div className="flex items-center justify-center my-4">
-            <hr className="border-gray-400 border-t w-full relative my-2" />
-            <div className="absolute bg-white px-2 text-gray-500">o</div>
-          </div>
-          <Social />
+        </div>
+        <div className="hidden md:block ml-20">
+          <Image
+            src="/gif/login.gif"
+            alt="Descripción de la imagen"
+            width={500}
+            height={500}
+          />
         </div>
       </section>
     </Suspense>

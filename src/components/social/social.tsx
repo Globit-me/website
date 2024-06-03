@@ -13,24 +13,22 @@ const Social = () => {
     }
 
   return (
-    <div className="flex flex-col items-center w-full gap-y-2">
+    <div className="flex flex-row items-center w-full space-x-3">
         <Button
             size="lg"
-            className="w-full flex items-center justify-start border border-gray-400"
+            className="w-full flex items-center justify-center border border-gray-400"
             variant="outline"
             onClick={() => onClick("google")}
         >
             <Image src="/brands/google.svg" alt="Google" width={24} height={24} />
-            <span className="flex-grow text-center">Continuar con Google</span>
         </Button>
         <Button
             size="lg"
-            className="w-full flex items-center justify-start border border-gray-400"
+            className="w-full flex items-center justify-center border border-gray-400"
             variant="outline"
             onClick={() => {}}
         >
             <Image src="/brands/apple.svg" alt="Apple" width={24} height={24} />
-            <span className="flex-grow text-center">Continuar con Apple</span>
         </Button>
     </div>
   );
