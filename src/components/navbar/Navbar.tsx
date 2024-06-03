@@ -5,8 +5,15 @@ import Image from "next/image";
 import NavLink from "./NavLink";
 import { NavbarMenu } from "./NavbarMenu";
 import Link from "next/link";
+import { Session } from "@auth/core/types";
+import { UserIcon, LogOutIcon } from "lucide-react";
+import { logout } from "@/lib/logout";
 
-const Navbar = () => {
+interface NavbarProps {
+  session: Session | null;
+}
+
+const Navbar = ({ session }: NavbarProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -19,6 +26,10 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const handleSignOut = async () => {
+    await logout();
+  };
 
   return (
     <nav
@@ -65,12 +76,39 @@ const Navbar = () => {
         </div>
 
         <div className="flex-row gap-8 items-center hidden md:flex">
-          <NavLink href="/login" className="font-semibold text-custom-blue">
-            Iniciar sesión
-          </NavLink>
-          <NavLink href="/register" className="font-semibold text-custom-blue">
-            Registrarse
-          </NavLink>
+          {session ? (
+            <>
+              <NavLink
+                href="/profile"
+                className="flex items-center text-custom-blue hover:text-custom-blue-dark transition duration-300"
+              >
+                <UserIcon className="w-6 h-6" />
+                <span className="ml-2 font-semibold">Perfil</span>
+              </NavLink>
+              <button
+                className="flex items-center font-semibold text-custom-blue hover:text-custom-blue-dark transition duration-300"
+                onClick={handleSignOut}
+              >
+                <LogOutIcon className="w-6 h-6" />
+                <span className="ml-2">Logout</span>
+              </button>
+            </>
+          ) : (
+            <>
+              <NavLink
+                href="/login"
+                className="font-semibold text-custom-blue hover:text-custom-blue-dark"
+              >
+                Iniciar sesión
+              </NavLink>
+              <NavLink
+                href="/register"
+                className="font-semibold text-custom-blue hover:text-custom-blue-dark"
+              >
+                Registrarse
+              </NavLink>
+            </>
+          )}
         </div>
       </div>
     </nav>

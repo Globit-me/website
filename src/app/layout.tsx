@@ -4,6 +4,7 @@ import "./globals.css";
 import  Footer  from "@/components/footer/Footer";
 import Navbar from "@/components/navbar/Navbar";
 import { Toaster } from 'react-hot-toast';
+import NavSession from "@/components/navbar/NavSession";
 
 const poppins = Poppins({ weight: ["400"], subsets: ["latin"] });
 
@@ -20,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <Navbar />
+        <NavSession />
         <div>{children}</div>
         <Toaster />
         <Footer />
