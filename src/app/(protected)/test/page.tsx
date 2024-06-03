@@ -2,7 +2,7 @@ import { auth, signOut } from "@/auth";
 
 const TestPage = async () => {
   const session = await auth();
-
+  
   const handleSignOut = async () => {
     "use server";
     await signOut({

@@ -1,92 +1,100 @@
 "use client";
 
-import AnimatedTitle from "@/components/form/AnimatedTitle";
-import CustomButton from "@/components/form/CustomButton";
-import InputField from "@/components/form/InputField";
-import Link from "next/link";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useTransition } from "react";
+//Custom Components
+import {
+  AnimatedTitle,
+  CustomButton,
+  InputField,
+  ToastSuccess,
+  ToastError,
+} from "@/components";
+
+//Schemas
 import { RegisterSchema } from "@/schemas";
+
+//Actions
+import { registration } from "@/actions";
+
+//Hooks
+import { useAuthMessage, useRegisterForm } from "@/hooks";
+
+//dependencies
 import { z } from "zod";
-import { registration } from "@/actions/registration";
-import toast from "react-hot-toast";
+import Link from "next/link";
+import { Suspense, useTransition } from "react";
+import Image from "next/image";
 
 const RegisterPage = () => {
   const [isPending, startTransition] = useTransition();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<z.infer<typeof RegisterSchema>>({
-    resolver: zodResolver(RegisterSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      repassword: "",
-    },
-  });
+  const { successMessage, errorMessage, handleResponse } = useAuthMessage();
+  const { register, errors, handleSubmit } = useRegisterForm();
 
   const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
     startTransition(() => {
-      registration(values).then((response) => {
-        if (response?.success) {
-          toast.success(response.success);
-        }
-        if (response?.error) {
-          toast.error(response.error);
-        }
-      });
+      handleResponse(values, registration);
     });
   };
 
   return (
-    <section className="max-w-6xl md:mx-auto mt-28 mb-8 md:mb-28 md:mt-56 mx-6">
-      <AnimatedTitle title="Registrarse" />
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <InputField
-          type="text"
-          id="name"
-          label="Nombre"
-          register={register("name")}
-          error={errors.name?.message}
-        />
-        <InputField
-          type="email"
-          id="email"
-          label="Correo Electrónico"
-          register={register("email")}
-          error={errors.email?.message}
-        />
-        <InputField
-          type="password"
-          id="password"
-          label="Contraseña"
-          register={register("password")}
-          error={errors.password?.message}
-        />
-        <InputField
-          type="password"
-          id="re-password"
-          label="Confirmar Contraseña"
-          register={register("repassword")}
-          error={errors.repassword?.message}
-        />
-        <CustomButton type="submit">Registrarse</CustomButton>
-      </form>
-      <div className="mt-6 text-center">
-        <p className="text-sm text-gray-700">
-          ¿Ya tienes una cuenta?
-          <Link
-            href="/login"
-            className="ml-1 font-medium text-custom-blue hover:text-custom-blue-dark"
-          >
-            Inicia Sesión
-          </Link>
-        </p>
-      </div>
-    </section>
+    <Suspense fallback={<div>Loading...</div>}>
+      <section className="relative max-w-6xl md:mx-auto mt-32 md:mt-56 mb-56 mx-6 grid grid-cols-1 md:grid-cols-2">
+        <div className="border-4 p-6">
+          <ToastError message={errorMessage} />
+          <ToastSuccess message={successMessage} />
+          <AnimatedTitle title="Registrarse" />
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <InputField
+              type="text"
+              id="name"
+              label="Nombre"
+              register={register("name")}
+              error={errors.name?.message}
+            />
+            <InputField
+              type="email"
+              id="email"
+              label="Correo Electrónico"
+              register={register("email")}
+              error={errors.email?.message}
+            />
+            <InputField
+              type="password"
+              id="password"
+              label="Contraseña"
+              register={register("password")}
+              error={errors.password?.message}
+            />
+            <InputField
+              type="password"
+              id="re-password"
+              label="Confirmar Contraseña"
+              register={register("repassword")}
+              error={errors.repassword?.message}
+            />
+            <CustomButton type="submit">Registrarse</CustomButton>
+          </form>
+          <div className="mt-3 text-center">
+            <p className="text-sm text-gray-700">
+              ¿Ya tienes una cuenta?
+              <Link
+                href="/login"
+                className="ml-1 font-medium text-custom-blue hover:text-custom-blue-dark"
+              >
+                Inicia Sesión
+              </Link>
+            </p>
+          </div>
+        </div>
+        <div className="hidden md:block ml-20">
+          <Image
+            src="/gif/register.gif"
+            alt="Descripción de la imagen"
+            width={500}
+            height={500}
+          />
+        </div>
+      </section>
+    </Suspense>
   );
 };
 

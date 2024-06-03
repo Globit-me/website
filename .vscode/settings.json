@@ -5,6 +5,7 @@
         "autoincrement",
         "cuid",
         "datasource",
+        "dayjs",
         "encriptación",
         "globit",
         "hookform",
