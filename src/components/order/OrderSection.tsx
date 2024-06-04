@@ -1,10 +1,10 @@
 "use client";
 
+import { useState } from "react";
+import dayjs from "dayjs";
 import OrderList from "@/components/order/OrderList";
 import RecentOrderList from "@/components/order/RecentOrderList";
 import { Order } from "@/types/order";
-import { useState } from "react";
-import dayjs from "dayjs";
 
 const ordersData: Order[] = [
   {
@@ -16,6 +16,9 @@ const ordersData: Order[] = [
     clientAddress: "Calle Falsa 123",
     clientImage: "/dni.jpg",
     closedDate: null,
+    amountSent: 254,
+    amountReceived: 23,
+    sendingBank: "Banco A",
   },
   {
     id: 2,
@@ -26,6 +29,9 @@ const ordersData: Order[] = [
     clientAddress: "Avenida Siempre Viva 742",
     clientImage: "/dni.jpg",
     closedDate: new Date(),
+    amountSent: 500,
+    amountReceived: 45,
+    sendingBank: "Banco C",
   },
 ];
 
@@ -47,16 +53,6 @@ const OrderSection = () => {
       orders.map((order) =>
         order.id === id
           ? { ...order, status: "Rechazada", closedDate: new Date() }
-          : order
-      )
-    );
-  };
-
-  const revertOrder = (id: number) => {
-    setOrders(
-      orders.map((order) =>
-        order.id === id
-          ? { ...order, status: "Abierta", closedDate: null }
           : order
       )
     );
@@ -89,7 +85,7 @@ const OrderSection = () => {
         <div>
           <h3 className="text-xl font-semibold mb-4">Órdenes Recientes</h3>
           {recentOrders.length > 0 ? (
-            <RecentOrderList orders={recentOrders} onRevert={revertOrder} />
+            <RecentOrderList orders={recentOrders} />
           ) : (
             <p>No hay órdenes recientes</p>
           )}

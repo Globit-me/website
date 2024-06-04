@@ -3,23 +3,16 @@ import OrderItem from "./OrderItem";
 
 interface RecentOrderListProps {
   orders: Order[];
-  onRevert: (id: number) => void;
 }
 
-const RecentOrderList: React.FC<RecentOrderListProps> = ({ orders, onRevert }) => {
+const RecentOrderList: React.FC<RecentOrderListProps> = ({ orders }) => {
   return (
     <div>
       {orders.map((order) => (
-        <OrderItem
-          key={order.id}
-          order={order}
-          onRevert={onRevert}
-          isRecent={true}
-        />
+        <OrderItem key={order.id} order={order} isRecent={true} />
       ))}
     </div>
   );
 };
 
 export default RecentOrderList;
-

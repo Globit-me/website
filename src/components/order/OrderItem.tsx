@@ -2,12 +2,13 @@ import { Order } from "@/types/order";
 import Image from "next/image";
 import React, { useState } from "react";
 import Modal from "react-modal";
+import ApprovedButton from "../buttons/ApprovedButton";
+import RejectButton from "../buttons/RejectButton"; 
 
 interface OrderItemProps {
   order: Order;
   onClose?: (id: number) => void;
   onReject?: (id: number) => void;
-  onRevert?: (id: number) => void;
   isRecent?: boolean;
 }
 
@@ -15,7 +16,6 @@ const OrderItem: React.FC<OrderItemProps> = ({
   order,
   onClose,
   onReject,
-  onRevert,
   isRecent,
 }) => {
   const [showDetails, setShowDetails] = useState(false);
@@ -24,7 +24,6 @@ const OrderItem: React.FC<OrderItemProps> = ({
   const fetchLargeImage = async () => {
     setModalIsOpen(true);
   };
-
   const closeModal = () => {
     setModalIsOpen(false);
   };
@@ -41,29 +40,11 @@ const OrderItem: React.FC<OrderItemProps> = ({
           ? "Rechazada"
           : "Abierta"}
       </p>
-      {order.status === "Abierta" && !isRecent && (
+      {order.status === "Abierta" && !isRecent && onClose && onReject && (
         <div className="flex space-x-2">
-          <button
-            className="mt-2 px-4 py-2 text-white bg-green-600 rounded"
-            onClick={() => onClose?.(order.id)}
-          >
-            Cerrar
-          </button>
-          <button
-            className="mt-2 px-4 py-2 text-white bg-red-600 rounded"
-            onClick={() => onReject?.(order.id)}
-          >
-            Rechazar
-          </button>
+          <ApprovedButton id={order.id} label="orden" onClick={onClose} />
+          <RejectButton id={order.id} label="orden" onClick={onReject} />
         </div>
-      )}
-      {isRecent && order.status !== "Abierta" && (
-        <button
-          className="mt-2 px-4 py-2 text-white bg-yellow-600 rounded mr-2"
-          onClick={() => onRevert?.(order.id)}
-        >
-          Revertir Decisión
-        </button>
       )}
       <button
         className="mt-2 px-4 py-2 text-white bg-blue-600 rounded"
@@ -85,6 +66,15 @@ const OrderItem: React.FC<OrderItemProps> = ({
           </p>
           <p>
             <strong>Domicilio:</strong> {order.clientAddress}
+          </p>
+          <p>
+            <strong>Monto Recibido:</strong> {order.amountReceived} dólares
+          </p>
+          <p>
+            <strong>Monto a Enviar:</strong> {order.amountSent} pesos
+          </p>
+          <p>
+            <strong>Banco Emisor:</strong> {order.sendingBank}
           </p>
           <button
             className="mt-2 px-4 py-2 text-white bg-custom-blue rounded"
