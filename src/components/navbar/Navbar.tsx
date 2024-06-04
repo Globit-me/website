@@ -53,8 +53,8 @@ const Navbar = ({ session }: NavbarProps) => {
                 />
               </Link>
             </header>
-            <NavLink href="/questions">Preguntas frecuentes</NavLink>
-            <NavLink href="/">Garantía</NavLink>
+            <NavLink href="/faq">Preguntas frecuentes</NavLink>
+            <NavLink href="/guarantee">Garantía</NavLink>
           </div>
         </div>
 
