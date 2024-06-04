@@ -41,7 +41,7 @@ export const registration = async (values: z.infer<typeof RegisterSchema>) => {
       throw new Error("Failed to generate verification token.");
     }
     
-    await sendVerificationEmail(email, verificationToken.token);
+    await sendVerificationEmail(verificationToken.email, verificationToken.token);
 
     return { success: "Mail de Confirmación Enviado!" }
   } catch (error: any) {
