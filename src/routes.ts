@@ -6,6 +6,8 @@
 export const publicRoutes = [
     "/",
     "/admin",   // provisional
+    "/faq",
+    "/guarantee",
 ]
 
 /**
