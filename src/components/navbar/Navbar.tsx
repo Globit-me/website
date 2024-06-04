@@ -6,7 +6,7 @@ import NavLink from "./NavLink";
 import { NavbarMenu } from "./NavbarMenu";
 import Link from "next/link";
 import { Session } from "@auth/core/types";
-import { UserIcon, LogOutIcon } from "lucide-react";
+import { UserIcon, LogOutIcon, LogIn, UserPlus } from "lucide-react";
 import { logout } from "@/lib/logout";
 
 interface NavbarProps {
@@ -71,7 +71,7 @@ const Navbar = ({ session }: NavbarProps) => {
                 />
               </Link>
             </header>
-            <NavbarMenu />
+            <NavbarMenu handleSignOut={handleSignOut} session={session} />
           </div>
         </div>
 
@@ -90,22 +90,24 @@ const Navbar = ({ session }: NavbarProps) => {
                 onClick={handleSignOut}
               >
                 <LogOutIcon className="w-6 h-6" />
-                <span className="ml-2">Logout</span>
+                <span className="ml-2">Salir</span>
               </button>
             </>
           ) : (
             <>
               <NavLink
                 href="/login"
-                className="font-semibold text-custom-blue hover:text-custom-blue-dark"
+                className="flex items-center font-semibold text-custom-blue hover:text-custom-blue-dark"
               >
-                Iniciar sesión
+                <LogIn className="mr-2 h-4 w-4" />
+                <span>Iniciar sesión</span>
               </NavLink>
               <NavLink
                 href="/register"
-                className="font-semibold text-custom-blue hover:text-custom-blue-dark"
+                className="flex items-center font-semibold text-custom-blue hover:text-custom-blue-dark"
               >
-                Registrarse
+                <UserPlus className="mr-2 h-4 w-4" />
+                <span>Registrarse</span>
               </NavLink>
             </>
           )}
