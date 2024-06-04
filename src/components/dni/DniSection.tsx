@@ -15,7 +15,7 @@ const DniSection: React.FC = () => {
       dni: "12345678",
       dob: "1990-01-01",
       address: "Calle Falsa 123",
-      dniImage: "/path/to/dni-image.jpg",
+      dniImage: "/dni.jpg",
       status: null, // null, 'approved', 'rejected'
       viewedDate: null,
     },
@@ -26,7 +26,7 @@ const DniSection: React.FC = () => {
       dni: "87654321",
       dob: "1985-05-05",
       address: "Avenida Siempre Viva 742",
-      dniImage: "/path/to/dni-image.jpg",
+      dniImage: "/dni.jpg",
       status: null,
       viewedDate: null,
     },
@@ -53,14 +53,6 @@ const DniSection: React.FC = () => {
     );
   };
 
-  const handleRevertDecision = (id: number) => {
-    setUsers((prevUsers) =>
-      prevUsers.map((user) =>
-        user.id === id ? { ...user, status: null, viewedDate: null } : user
-      )
-    );
-  };
-
   const recentViewedUsers = users.filter(
     (user) =>
       user.viewedDate &&
@@ -69,7 +61,9 @@ const DniSection: React.FC = () => {
 
   return (
     <div className="flex flex-col">
-      <h2 className="text-2xl md:text-3xl font-semibold text-custom-blue mb-4 underline">DNIs</h2>
+      <h2 className="text-2xl md:text-3xl font-semibold text-custom-blue mb-4 underline">
+        DNIs
+      </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <h2 className="text-xl font-bold mb-4">DNIs por Aprobar</h2>
@@ -87,10 +81,7 @@ const DniSection: React.FC = () => {
         <div>
           <h2 className="text-xl font-bold mb-4">DNIs Vistos Recientemente</h2>
           {recentViewedUsers.length > 0 ? (
-            <RecentViewedDNIList
-              users={recentViewedUsers}
-              onRevert={handleRevertDecision}
-            />
+            <RecentViewedDNIList users={recentViewedUsers} />
           ) : (
             <p>No hay DNIs vistos recientemente</p>
           )}
