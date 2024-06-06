@@ -91,6 +91,7 @@ const RegisterPage = () => {
             alt="Descripción de la imagen"
             width={500}
             height={500}
+            unoptimized
           />
         </div>
       </section>

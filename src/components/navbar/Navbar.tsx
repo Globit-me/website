@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Session } from "@auth/core/types";
 import { UserIcon, LogOutIcon, LogIn, UserPlus } from "lucide-react";
 import { logout } from "@/lib/logout";
+import { verifyDni } from "@/actions/profile";
 
 interface NavbarProps {
   session: Session | null;
@@ -29,6 +30,12 @@ const Navbar = ({ session }: NavbarProps) => {
 
   const handleSignOut = async () => {
     await logout();
+  };
+
+  const handleProfile = async () => {
+    if (session?.user.id) {
+      /* await verifyDni(session.user.id); */
+    }
   };
 
   return (
@@ -78,13 +85,13 @@ const Navbar = ({ session }: NavbarProps) => {
         <div className="flex-row gap-8 items-center hidden md:flex">
           {session ? (
             <>
-              <NavLink
-                href="/profile"
+              <button
                 className="flex items-center text-custom-blue hover:text-custom-blue-dark transition duration-300"
+                onClick={handleProfile}
               >
                 <UserIcon className="w-6 h-6" />
                 <span className="ml-2 font-semibold">Perfil</span>
-              </NavLink>
+              </button>
               <button
                 className="flex items-center font-semibold text-custom-blue hover:text-custom-blue-dark transition duration-300"
                 onClick={handleSignOut}
