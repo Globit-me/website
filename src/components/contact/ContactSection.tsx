@@ -3,8 +3,8 @@
 import { sendEmail } from "@/actions/email";
 import toast from "react-hot-toast";
 import Image from "next/image";
-import InputField from "./InputField";
-import TextAreaField from "./TextAreaField";
+import InputField from "../field/InputField";
+import TextAreaField from "../field/TextAreaField";
 
 const ContactSection = () => {
   const handleContact = async (event: React.FormEvent<HTMLFormElement>) => {

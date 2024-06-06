@@ -19,3 +19,46 @@ export const getUserById = async (id: string) => {
         return null;
     }
 }
+
+export const getUserDni = async (userId: string) => {
+    try {
+        return await db.dNIImage.findFirst({
+            where: { userId }
+        });
+    } catch (error) {
+        return null;
+    }
+}
+
+export const addUserDni = async (userId: string, front: Buffer, reverse: Buffer) => {
+    try {
+        return await db.dNIImage.create({
+            data: {
+                userId,
+                front,
+                reverse
+            }
+        });
+    } catch (error) {
+        return null;
+    }
+}
+
+export const addExtraData = async (id:string, dni: string, birthday: string, country: string, province: string, address: string, addressNumber: string, /* apartment: string */) => {
+    try {
+        return await db.user.update({
+            where: { id },
+            data: {
+                dni,
+                dob: birthday,
+                country,
+                province,
+                address,
+                addressNumber,
+                /* apartment */
+            }
+        });
+    } catch (error) {
+        return null;
+    }
+}

@@ -8,9 +8,13 @@ CREATE TABLE "User" (
     "role" TEXT NOT NULL DEFAULT 'USER',
     "image" TEXT,
     "dni" TEXT,
-    "dob" DATETIME,
+    "dob" TEXT,
+    "country" TEXT,
+    "province" TEXT,
     "address" TEXT,
-    "status" TEXT DEFAULT 'pending',
+    "addressNumber" TEXT,
+    "apartment" TEXT,
+    "status" TEXT NOT NULL DEFAULT 'pending',
     "viewedDate" DATETIME
 );
 
@@ -65,6 +69,12 @@ CREATE TABLE "Order" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_dni_key" ON "User"("dni");
+
+-- CreateIndex
+CREATE INDEX "User_dni_idx" ON "User"("dni");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "VerificationToken_token_key" ON "VerificationToken"("token");
