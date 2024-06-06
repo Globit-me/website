@@ -1,13 +1,17 @@
-import { auth, signOut } from "@/auth";
+"use client"
 
-const TestPage = async () => {
-  const session = await auth();
-  
-  const handleSignOut = async () => {
-    "use server";
-    await signOut({
-      redirectTo: "/login"
-    });
+import { showDni, verifyDni } from "@/actions/profile";
+
+export default function TestPage() {
+
+  const handleVerifyDni = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const data = new FormData();
+    await verifyDni(data);
+  };
+
+  const handleShowDni = async () => {
+    await showDni();
   }
 
   return (
@@ -16,8 +20,8 @@ const TestPage = async () => {
       <form action={handleSignOut}>
         <button type="submit" >Cerrar Sesión</button>
       </form>
+
+        <button onSubmit={handleShowDni}>mostrar dni</button>
     </div>
   );
-};
-
-export default TestPage;
+}

@@ -7,6 +7,7 @@ import { NavbarMenu } from "./NavbarMenu";
 import Link from "next/link";
 import { UserIcon, LogOutIcon, LogIn, UserPlus } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
+import { verifyDni } from "@/actions/profile";
 
 
 const Navbar = () => {
@@ -28,6 +29,12 @@ const Navbar = () => {
 
   const handleSignOut = async () => {
     await signOut();
+  };
+
+  const handleProfile = async () => {
+    if (session?.user.id) {
+      /* await verifyDni(session.user.id); */
+    }
   };
 
   return (
@@ -78,13 +85,13 @@ const Navbar = () => {
         <div className="flex-row gap-8 items-center hidden md:flex">
           { authenticated ? (
             <>
-              <NavLink
-                href="/profile"
+              <button
                 className="flex items-center text-custom-blue hover:text-custom-blue-dark transition duration-300"
+                onClick={handleProfile}
               >
                 <UserIcon className="w-6 h-6" />
                 <span className="ml-2 font-semibold">Perfil</span>
-              </NavLink>
+              </button>
               <button
                 className="flex items-center font-semibold text-custom-blue hover:text-custom-blue-dark transition duration-300"
                 onClick={handleSignOut}
