@@ -4,7 +4,7 @@ import * as z from "zod";
 import bcrypt from "bcryptjs";
 import { RegisterSchema } from "@/schemas";
 import { db } from "@/lib/db";
-import { getUserByEmail } from "@/data/user";
+import { createUser, getUserByEmail } from "@/data/user";
 import { 
   generateVerificationToken,
   sendVerificationEmail,
@@ -28,22 +28,18 @@ export const registration = async (values: z.infer<typeof RegisterSchema>) => {
   }
 
   try {
-    await db.user.create({
-      data: {
-        email,
-        password: hashedPassword,
-        name,
-      },
-    });
+
+    await createUser(email, hashedPassword, name);
 
     const verificationToken = await generateVerificationToken(email);
     if (!verificationToken) {
-      throw new Error("Failed to generate verification token.");
+      return { error: "Error al generar el token de verificación." };
     }
     
     await sendVerificationEmail(verificationToken.email, verificationToken.token);
 
-    return { success: "Mail de Confirmación Enviado!" }
+    return { success: "Mail de Confirmación Enviado!" };
+    
   } catch (error: any) {
     return { error: "Error al crear el usuario. Por favor, inténtalo de nuevo."};
   }

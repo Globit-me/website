@@ -2,7 +2,7 @@ import { useState } from "react";
 
 
 /**
- * Custom hook to manage authentication messages.
+ * Custom hook to manage authentication messages that requires a token.
  *
  * @returns {object} - An object containing success and error messages, and a function to handle responses.
  * @property {string} successMessage - The success message.
@@ -13,16 +13,16 @@ import { useState } from "react";
  */
 
 
-export const useAuthMessage = () => {
+export const useAuthMessageWithToken = () => {
     const [successMessage, setSuccessMessage] = useState<string>("");
     const [errorMessage, setErrorMessage] = useState<string>("");
 
-    const handleResponse = async (values: any, authFunction: any) => {
+    const handleResponse = async (values: any, authFunction: any, token?: string | null) => {
         setSuccessMessage("");
         setErrorMessage("");
 
 
-        const response = await authFunction(values);
+        const response = await authFunction(values, token);
 
         if (response?.success) {
             setSuccessMessage(response.success);

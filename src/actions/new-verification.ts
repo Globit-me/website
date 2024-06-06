@@ -1,8 +1,8 @@
 "use server";
 
 import { db } from "@/lib/db"
-import { getUserByEmail } from "@/data/user";
-import { getVerificationTokenByToken } from "@/data/verification-token";
+import { getUserByEmail, updateUserEmail } from "@/data/user";
+import { deleteVerificationTokenById, getVerificationTokenByToken } from "@/data/verification-token";
 
 export const newVerification = async (token: string) => {
     try {
@@ -29,13 +29,13 @@ export const newVerification = async (token: string) => {
                 email: existingToken.email,
             }
         });
-    
-        await db.verificationToken.delete({
-            where: { id: existingToken.id }
-        });
+
+        await updateUserEmail(existingUser.id, existingToken.email);
+
+        await deleteVerificationTokenById(existingToken.id);
     
         return { success: "Email verificado!" };
-    } catch (error) {
+    } catch (error: any) {
         return { error: "Algo ha salido mal!" };
     }
 }

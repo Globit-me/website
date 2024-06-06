@@ -11,13 +11,13 @@ import {
 } from "@/components";
 
 //Schemas
-import { LoginSchema } from "@/schemas";
+import { ResetSchema } from "@/schemas";
 
 //Actions
-import { login } from "@/actions";
+import { reset } from "@/actions";
 
 //Hooks
-import { useAuthMessage, useOAuthError, useLoginForm } from "@/hooks";
+import { useAuthMessage, useResetForm } from "@/hooks";
 
 //dependencies
 import { z } from "zod";
@@ -26,25 +26,24 @@ import { Suspense, useTransition } from "react";
 import Image from "next/image";
 
 
-const LoginForm = () => {
+const ResetForm = () => {
+  const { register, errors, handleSubmit } = useResetForm();
   const { successMessage, errorMessage, handleResponse } = useAuthMessage();
-  //const errorParam = useOAuthError(); //This is not used, try to fix it later
-  const { register, errors, handleSubmit } = useLoginForm();
   const [isPending, startTransition] = useTransition();
 
-  const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
+  const onSubmit = async (values: z.infer<typeof ResetSchema>) => {
     startTransition(() => {
-      handleResponse(values, login);
+      handleResponse(values, reset);
     });
   };
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <section className="relative max-w-6xl md:mx-auto mt-32 md:mt-56 mb-56 mx-6 grid grid-cols-1 md:grid-cols-2">
-        <div className="border-4 p-6">
+        <div className="border-4 p-6 flex flex-col justify-center">
           <ToastError message={errorMessage} />
           <ToastSuccess message={successMessage} />
-          <AnimatedTitle title="Iniciar sesión" />
+          <AnimatedTitle title="Olvidaste tu contraseña?" />
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <InputField
               type="email"
@@ -54,37 +53,16 @@ const LoginForm = () => {
               error={errors.email?.message}
               disabled={isPending}
             />
-            <InputField
-              type="password"
-              id="password"
-              label="Contraseña"
-              register={register("password")}
-              disabled={isPending}
-              error={errors.password?.message}
-            />
-
-            <div className="flex items-center justify-end">
+            <CustomButton type="submit">Enviar Correo</CustomButton>
+            <div className="flex items-center justify-center">
               <Link
-                href="/reset"
+                href="/login"
                 className="font-medium text-custom-blue hover:text-custom-blue-dark text-sm"
               >
-                ¿Olvidaste tu contraseña?
+                Volver a Iniciar Sesión
               </Link>
-            </div>
-            <CustomButton type="submit">Iniciar Sesión</CustomButton>
-          </form>
-          <div className="mt-3 text-center">
-            <Social />
-            <p className="text-sm text-gray-700 mt-3">
-              ¿No tienes una cuenta?
-              <Link
-                href="/register"
-                className="ml-1 font-medium text-custom-blue hover:text-custom-blue-dark"
-              >
-                Regístrate
-              </Link>
-            </p>
           </div>
+        </form>
         </div>
         <div className="hidden md:block ml-20">
           <Image
@@ -99,4 +77,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default ResetForm;
