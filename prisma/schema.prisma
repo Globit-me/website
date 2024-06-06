@@ -15,14 +15,20 @@ model User {
   password      String?
   role          String    @default("USER")
   image         String?
-  dni           String?
-  dob           DateTime? 
+  dni           String?   @unique
+  dob           String?
+  country       String?
+  province      String?
   address       String?
-  status        String?   @default("pending") // approved, rejected, or pending
+  addressNumber String?
+  apartment     String?
+  status        String    @default("pending") // approved, rejected, or pending
   viewedDate    DateTime?
   dniImage      DNIImage?
   accounts      Account[]
   orders        Order[]
+
+  @@index([dni]) // Add index to dni for fast lookup
 }
 
 model Account {

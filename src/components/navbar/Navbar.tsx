@@ -32,9 +32,7 @@ const Navbar = () => {
   };
 
   const handleProfile = async () => {
-    if (session?.user.id) {
-      /* await verifyDni(session.user.id); */
-    }
+    await verifyDni()
   };
 
   return (
