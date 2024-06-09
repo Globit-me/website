@@ -17,10 +17,10 @@ const RotatingButton: React.FC<RotatingButtonProps> = ({ onClick, className = ''
   };
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center ml-0 justify-center md:ml-40 md:justify-start">
       <motion.button
         onClick={handleClick}
-        className={`flex items-center justify-center ${className}`}
+        className={`flex items-center  ${className}`}
         animate={{ rotate: isRotated ? 180 : 0 }}
         transition={{ duration: 0.1 }}
       >

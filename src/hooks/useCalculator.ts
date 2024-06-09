@@ -1,24 +1,39 @@
-import { useState, ChangeEvent, useCallback, useEffect, useMemo } from 'react';
-import { Bank } from '../types/Calculator'; 
+import { useState, ChangeEvent, useCallback, useMemo } from "react";
+import { Bank } from "../types/Calculator";
 
-const numberRegex = /^\d*\.?\d*$/
+const numberRegex = /^\d*\.?\d*$/;
 
-export const useCalculator = (banks: Bank[]) => {
+export const useCalculator = (
+  banks: Bank[],
+  exchangeRates: { buy: number; sell: number } | null
+) => {
   const [fromBank, setFromBank] = useState(banks[0]);
-  const [toBank, setToBank] = useState(banks[1]);
+  const [toBank, setToBank] = useState(banks[5]);
   const [amount, setAmount] = useState(0);
 
   const exchangedAmount = useMemo(() => {
-    if (fromBank && toBank) {
-      return Number(((amount * fromBank.exchangeRate) / toBank.exchangeRate).toFixed(2));
+    if (fromBank && toBank && exchangeRates) {
+      let amountAfterCommission = amount;
+
+      if (fromBank.currency === "USD" && toBank.currency === "ARS") {
+        // Comisión de 5.5% para cambiar de USD a ARS
+        amountAfterCommission = amount * (1 - 0.055);
+        return Number((amountAfterCommission * exchangeRates.sell).toFixed(2));
+      } else if (fromBank.currency === "ARS" && toBank.currency === "USD") {
+        // Comisión de 6.5% y cobro de 10 USD para cambiar de ARS a USD
+        const commission = amount * 0.065;
+        const totalDeduction = commission + 10 * exchangeRates.buy;
+        amountAfterCommission = amount - totalDeduction;
+        return Number((amountAfterCommission / exchangeRates.buy).toFixed(2));
+      }
     }
     return 0;
-  }, [fromBank, toBank, amount]);
+  }, [fromBank, toBank, amount, exchangeRates]);
 
   const calculateExchange = useCallback(
     (() => {
       let timeoutId: NodeJS.Timeout;
-  
+
       return (amount: number) => {
         clearTimeout(timeoutId);
         timeoutId = setTimeout(() => {

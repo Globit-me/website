@@ -1,19 +1,18 @@
 "use client";
 
-import React from "react";
 import RotatingButton from "./RotatingButton";
 import AmountInput from "./AmountInput";
 import BankSelect from "./BankSelect";
-import { Bank } from "../../types/Calculator";
 import { useCalculator } from "@/hooks/useCalculator";
 import InfoTooltip from "./InfoTooltip";
+import { Bank } from "@/types/Calculator";
 
-const banks: Bank[] = [
-  { name: "Payoneer", currency: "USD", exchangeRate: 1 },
-  { name: "Bank 2", currency: "ARS", exchangeRate: 95 },
-];
+interface CalculatorProps {
+  banks: Bank[];
+  exchangeRates: { buy: number; sell: number };
+}
 
-const Calculator = () => {
+const Calculator = ({ banks, exchangeRates }: CalculatorProps) => {
   const {
     fromBank,
     toBank,
@@ -23,7 +22,16 @@ const Calculator = () => {
     handleToBankChange,
     handleSwitchBanks,
     handleAmountChange,
-  } = useCalculator(banks);
+  } = useCalculator(banks, exchangeRates);
+
+  if (!banks.length || !exchangeRates) {
+    console.log(banks, exchangeRates);
+    return <div>Loading...</div>;
+  }
+
+  if (!fromBank || !toBank) {
+    return <div>Error: Banks data not loaded correctly.</div>;
+  }
 
   return (
     <div className="flex flex-col md:flex-1 items-center justify-center my-8 md:my-0 border-4">
@@ -36,8 +44,9 @@ const Calculator = () => {
           />
           <BankSelect
             label="Desde Banco"
-            selectedBank={fromBank.name}
+            selectedBank={fromBank?.name}
             onChange={handleFromBankChange}
+            banks={banks}
           />
         </div>
 
@@ -45,15 +54,16 @@ const Calculator = () => {
 
         <div className="mb-0 md:mb-4 flex flex-col md:flex-row items-center">
           <AmountInput
-            label={`Recibes ${toBank.currency}`}
+            label={`Recibes ${toBank?.currency}`}
             amount={exchangedAmount}
             onChange={() => {}}
             readOnly
           />
           <BankSelect
             label="A Banco"
-            selectedBank={toBank.name}
+            selectedBank={toBank?.name}
             onChange={handleToBankChange}
+            banks={banks}
           />
         </div>
         <div className="mt-2 flex flex-row items-center w-full">
@@ -62,7 +72,7 @@ const Calculator = () => {
               console.log("Button Clicked");
             }}
             className="bg-custom-blue text-white font-bold py-2 px-4 rounded w-full md:w-8/12 hover:bg-custom-blue-dark transition duration-300"
-          > 
+          >
             Solicita tu envío
           </button>
           <InfoTooltip />

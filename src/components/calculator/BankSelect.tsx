@@ -1,23 +1,20 @@
-import{ ChangeEvent } from "react";
+import { Bank } from "@/types/Calculator";
+import { ChangeEvent } from "react";
 
 interface BankSelectProps {
   label: string;
   selectedBank: string;
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+  banks: Bank[];
 }
 
-type Bank = {
-  name: string;
-  currency: string;
-  exchangeRate: number;
-};
 
-const banks: Bank[] = [
-  { name: "Bank 1", currency: "USD", exchangeRate: 1 },
-  { name: "Bank 2", currency: "ARS", exchangeRate: 95 },
-];
-
-const BankSelect: React.FC<BankSelectProps> = ({ label, selectedBank, onChange }) => (
+const BankSelect: React.FC<BankSelectProps> = ({
+  label,
+  selectedBank,
+  onChange,
+  banks
+}) => (
   <div className="flex-grow mb-4 md:mb-0 md:mr-2">
     <select
       value={selectedBank}
