@@ -3,6 +3,7 @@
         "AFIP",
         "ASAEDE",
         "autoincrement",
+        "Brubank",
         "cuid",
         "datasource",
         "dayjs",
@@ -15,6 +16,7 @@
         "politicas",
         "postgresql",
         "repassword",
-        "unoptimized",
+        "Uala",
+        "unoptimized"
     ]
 }
