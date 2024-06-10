@@ -41,32 +41,30 @@ const eighteenYearsAgo = new Date(
 export const profileSchema = z.object({
   dni: z
     .string()
-    .min(1, {
-      message: "DNI inválido",
+    .min(4, { message: "Requerido" })
+    .regex(/^\d+$/, { message: "El DNI debe contener solo números" }),
+  birthday: z
+    .string()
+    .transform((str) => new Date(str))
+    .refine((date) => !isNaN(date.getTime()), { message: "Requerido" })
+    .refine((date) => date <= eighteenYearsAgo, {
+      message: "Debes ser mayor de 18 años",
     })
-    .regex(/^\d+$/, {
-      message: "El DNI debe contener solo números",
+    .refine((date) => date >= new Date(1900, 0, 1), {
+      message: "Fecha inválida",
     }),
-  birthday: z.date().refine((date) => date <= eighteenYearsAgo, {
-    message: "Debes ser mayor de 18 años",
-  }),
-  country: z.string().min(1, {
-    message: "País inválido",
-  }),
-  province: z.string().min(1, {
-    message: "Provincia inválida",
-  }),
-  address: z.string().min(1, {
-    message: "Dirección inválida",
-  }),
+  country: z.string().min(3, { message: "Requerido" }),
+  province: z.string().min(3, { message: "Requerido" }),
+  address: z
+    .string()
+    .min(3, { message: "Requerido" })
+    .regex(/^[a-zA-Z\s]+$/, {
+      message: "Dirección inválida",
+    }),
   addressNumber: z
     .string()
-    .min(1, {
-      message: "Número de dirección inválido",
-    })
-    .regex(/^\d+$/, {
-      message: "El número de dirección debe contener solo números",
-    }),
+    .min(1, { message: "Requerido" })
+    .regex(/^\d+$/, { message: "Número inválido" }),
   apartment: z.string().optional(),
   dniFront: z
     .instanceof(File)
