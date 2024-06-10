@@ -8,7 +8,7 @@ CREATE TABLE "User" (
     "role" TEXT NOT NULL DEFAULT 'USER',
     "image" TEXT,
     "dni" TEXT,
-    "dob" TEXT,
+    "dob" DATETIME,
     "country" TEXT,
     "province" TEXT,
     "address" TEXT,

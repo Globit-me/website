@@ -16,7 +16,7 @@ model User {
   role          String    @default("USER")
   image         String?
   dni           String?   @unique
-  dob           String?
+  dob           DateTime?
   country       String?
   province      String?
   address       String?
