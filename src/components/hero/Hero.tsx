@@ -10,6 +10,7 @@ const Hero = async () => {
     { name: "Wise", currency: "USD" },
     { name: "Zelle", currency: "USD" },
     { name: "Deel", currency: "USD" },
+    { name: "Stripe", currency: "USD" },
     { name: "Banco Arg", currency: "ARS" },
     { name: "Mercado pago", currency: "ARS" },
     { name: "Uala", currency: "ARS" },

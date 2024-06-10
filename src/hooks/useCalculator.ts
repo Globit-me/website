@@ -8,7 +8,7 @@ export const useCalculator = (
   exchangeRates: { buy: number; sell: number } | null
 ) => {
   const [fromBank, setFromBank] = useState(banks[0]);
-  const [toBank, setToBank] = useState(banks[5]);
+  const [toBank, setToBank] = useState(banks[6]);
   const [amount, setAmount] = useState(0);
 
   const exchangedAmount = useMemo(() => {
