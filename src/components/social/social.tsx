@@ -22,14 +22,14 @@ const Social = () => {
         >
             <Image src="/brands/google.svg" alt="Google" width={24} height={24} />
         </Button>
-        <Button
+        {/* <Button
             size="lg"
             className="w-full flex items-center justify-center border border-gray-400"
             variant="outline"
             onClick={() => {}}
         >
             <Image src="/brands/apple.svg" alt="Apple" width={24} height={24} />
-        </Button>
+        </Button> */}
     </div>
   );
 }

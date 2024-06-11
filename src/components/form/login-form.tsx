@@ -8,7 +8,9 @@ import {
   Social,
   ToastError,
   ToastSuccess,
+  Separator,
 } from "@/components";
+
 
 //Schemas
 import { LoginSchema } from "@/schemas";
@@ -26,6 +28,7 @@ import { Suspense, useTransition } from "react";
 import Image from "next/image";
 
 
+
 const LoginForm = () => {
   const { successMessage, errorMessage, handleResponse } = useAuthMessage();
   //const errorParam = useOAuthError(); //This is not used, try to fix it later
@@ -40,7 +43,7 @@ const LoginForm = () => {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <section className="relative max-w-6xl md:mx-auto mt-32 md:mt-56 mb-56 mx-6 grid grid-cols-1 md:grid-cols-2">
+      <section className="relative max-w-6xl md:mx-auto mt-40 mb-40 md:mt-56 md:mb-56 mx-6 grid grid-cols-1 md:grid-cols-2">
         <div className="border-4 p-6">
           <ToastError message={errorMessage} />
           <ToastSuccess message={successMessage} />
@@ -74,6 +77,7 @@ const LoginForm = () => {
             <CustomButton type="submit">Iniciar Sesión</CustomButton>
           </form>
           <div className="mt-3 text-center">
+            <Separator />
             <Social />
             <p className="text-sm text-gray-700 mt-3">
               ¿No tienes una cuenta?
