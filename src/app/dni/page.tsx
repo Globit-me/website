@@ -7,6 +7,7 @@ import InputField from "@/components/profile/InputField";
 import DropdownField from "@/components/profile/DropdownField";
 import { updateProfile } from "@/actions/profile";
 import { profileSchema } from "@/schemas";
+import { z } from "zod";
 
 const ProfilePage: React.FC = () => {
   const {
@@ -14,13 +15,35 @@ const ProfilePage: React.FC = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({
+  } = useForm<z.infer<typeof profileSchema>>({
     resolver: zodResolver(profileSchema),
   });
 
-  const handleProfileUpdate = async (data: any) => {
+  const handleProfileUpdate = async (data: z.infer<typeof profileSchema>) => {
+    const {
+      dni,
+      birthday,
+      country,
+      province,
+      address,
+      addressNumber,
+      apartment,
+      dniFront,
+      dniBack,
+    } = data;
 
-    await updateProfile(data);
+    const formData = new FormData();
+    formData.append("dni", dni);
+    formData.append("birthday", birthday.toString());
+    formData.append("country", country);
+    formData.append("province", province);
+    formData.append("address", address);
+    formData.append("addressNumber", addressNumber);
+    if (apartment) formData.append("apartment", apartment);
+    formData.append("dniFront", dniFront[0]);
+    formData.append("dniBack", dniBack[0]);
+
+    await updateProfile(formData);
     reset();
   };
 

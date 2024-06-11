@@ -67,11 +67,73 @@ export const profileSchema = z.object({
     .regex(/^\d+$/, { message: "Número inválido" }),
   apartment: z.string().optional(),
   dniFront: z
+    .any()
+    .refine((fileList) => fileList instanceof FileList && fileList.length > 0, {
+      message: "Requerido",
+    })
+    .refine(
+      (fileList) =>
+        fileList instanceof FileList &&
+        fileList.length > 0 &&
+        fileList[0].type.startsWith("image/"),
+      { message: "Solo se permiten imágenes" }
+    ),
+  dniBack: z
+    .any()
+    .refine((fileList) => fileList instanceof FileList && fileList.length > 0, {
+      message: "Requerido",
+    })
+    .refine(
+      (fileList) =>
+        fileList instanceof FileList &&
+        fileList.length > 0 &&
+        fileList[0].type.startsWith("image/"),
+      { message: "Solo se permiten imágenes" }
+    ),
+});
+
+export const profileSchemaBack = z.object({
+  dni: z
+    .string()
+    .min(4, { message: "Requerido" })
+    .regex(/^\d+$/, { message: "El DNI debe contener solo números" }),
+  birthday: z
+    .string()
+    .transform((str) => new Date(str))
+    .refine((date) => !isNaN(date.getTime()), { message: "Requerido" })
+    .refine((date) => date <= eighteenYearsAgo, {
+      message: "Debes ser mayor de 18 años",
+    })
+    .refine((date) => date >= new Date(1900, 0, 1), {
+      message: "Fecha inválida",
+    }),
+  country: z.string().min(3, { message: "Requerido" }),
+  province: z.string().min(3, { message: "Requerido" }),
+  address: z
+    .string()
+    .min(3, { message: "Requerido" })
+    .regex(/^[a-zA-Z\s]+$/, {
+      message: "Dirección inválida",
+    }),
+  addressNumber: z
+    .string()
+    .min(1, { message: "Requerido" })
+    .regex(/^\d+$/, { message: "Número inválido" }),
+  apartment: z.string().optional(),
+  dniFront: z
     .instanceof(File)
+    .refine((file) => file.size > 0, {
+      message: "Requerido",
+    })
     .refine((file) => file.type.startsWith("image/"), {
       message: "Solo se permiten imágenes",
     }),
-  dniBack: z.instanceof(File).refine((file) => file.type.startsWith("image/"), {
-    message: "Solo se permiten imágenes",
-  }),
+  dniBack: z
+    .instanceof(File)
+    .refine((file) => file.size > 0, {
+      message: "Requerido",
+    })
+    .refine((file) => file.type.startsWith("image/"), {
+      message: "Solo se permiten imágenes",
+    }),
 });

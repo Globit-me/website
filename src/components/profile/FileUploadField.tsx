@@ -1,5 +1,3 @@
-import React from "react";
-
 interface FileUploadFieldProps {
   id: string;
   name: string;
