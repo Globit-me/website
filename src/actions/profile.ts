@@ -4,6 +4,7 @@ import { profileSchema } from "@/schemas";
 import { auth } from "@/auth";
 import { addExtraData, addUserDni, getUserDni } from "@/data/user";
 import { redirect } from "next/navigation";
+import { z } from "zod";
 
 export const verifyDni = async () => {
   const session = await auth();
@@ -34,8 +35,8 @@ export const showDni = async () => {
   }
 };
 
-export const updateProfile = async (data: FormData) => {
-  const parsedData = profileSchema.safeParse(Object.fromEntries(data));
+export const updateProfile = async (data: z.infer<typeof profileSchema>) => {
+  const parsedData = profileSchema.safeParse(data);
 
   if (!parsedData.success) {
     throw new Error(parsedData.error.errors[0].message);
