@@ -4,3 +4,6 @@ export { useLoginForm } from "@/hooks/useLoginForm";
 export { useOAuthError } from "@/hooks/useOAuthError";
 export { useRegisterForm } from "@/hooks/useRegisterForm";
 export { useToast } from "@/hooks/useToast"; 
+export { useResetForm } from "@/hooks/useResetForm";
+export { useNewPasswordForm } from "@/hooks/useNewPasswordForm";
+export { useAuthMessageWithToken } from "@/hooks/useAuthMessageWithToken";

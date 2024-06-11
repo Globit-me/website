@@ -39,11 +39,21 @@ model Account {
   @@id([provider, providerAccountId])
 }
 
+//Gus no cambies nada, son identicos los modelos pero por seguridad conviene tenerlos separados
 model VerificationToken {
   id       String   @id @default(cuid())
   email    String
   token    String   @unique
   expires  DateTime
+
+  @@unique([email, token])
+}
+
+model PasswordResetToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
 
   @@unique([email, token])
 }

@@ -35,10 +35,11 @@ export const deleteVerificationTokenById = async (id: string) => {
         });
     } catch (error) {
         console.log("ERROR: ", error);
+        throw new Error("Error deleting verification token");
     }
 }
 
-export const createToken = async ({ email, token, expires }: data) => {
+export const createVerificationToken = async ({ email, token, expires }: data) => {
     try {
         const verificationToken = await db.verificationToken.create({
             data: {
@@ -50,5 +51,6 @@ export const createToken = async ({ email, token, expires }: data) => {
         return verificationToken;
     } catch (error) {
         console.log("ERROR: ", error);
+        throw new Error("Error creating verification token");
     }
 }

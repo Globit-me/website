@@ -5,3 +5,4 @@ export { default as CustomButton } from "./form/CustomButton";
 export { default as Social } from "./social/social";
 export { ToastError } from "./form/toast-error";
 export { ToastSuccess } from "./form/toast-success";
+export { default as Separator } from "./Separator"
