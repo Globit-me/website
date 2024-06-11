@@ -35,11 +35,9 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
   if (!existingUser.emailVerified) {
     const verificationToken = await generateVerificationToken(existingUser.email);
     if (!verificationToken) return { error: "Error al generar el token de verificación." };
-    await sendVerificationEmail(verificationToken?.email,verificationToken.token);
+    await sendVerificationEmail(verificationToken.email, verificationToken.token);
     return { success: "Reenviando mail de confirmación." };
   }
-
-  
 
   try {
     await signIn("credentials", {
@@ -47,12 +45,15 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
       password,
       redirectTo: DEFAULT_LOGIN_REDIRECT,
     });
+
     return { success: "Inicio de sesión exitoso" };
-  } catch (error) {
+
+  } catch (error: any) {
     if (error instanceof AuthError) {
       const errorMessage = errorMessages[error.type as ErrorType] || errorMessages.default;
       return { error: errorMessage };
     }
+
 
     throw error; //prevents a bug, otherwise will not redirect the user
   }
