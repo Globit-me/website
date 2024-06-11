@@ -19,10 +19,8 @@ const ProfilePage: React.FC = () => {
   });
 
   const handleProfileUpdate = async (data: any) => {
-    const formData = new FormData();
-    console.log(formData);
 
-    await updateProfile(formData);
+    await updateProfile(data);
     reset();
   };
 
