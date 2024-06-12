@@ -20,6 +20,40 @@ export const getUserById = async (id: string) => {
   }
 };
 
+export const getUsersDniVerification = async (twoDaysAgo: Date) => {
+  try {
+    return await db.user.findMany({
+      where: {
+        status: "pending",
+        viewedDate: {
+          gte: twoDaysAgo,
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        emailVerified: true,
+        password: true,
+        role: true,
+        image: true,
+        dni: true,
+        dob: true,
+        country: true,
+        province: true,
+        address: true,
+        addressNumber: true,
+        apartment: true,
+        status: true,
+        viewedDate: true,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
 export const getUserDni = async (userId: string) => {
   try {
     return await db.dNIImage.findFirst({
