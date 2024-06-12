@@ -2,7 +2,7 @@
 
 import { profileSchema, profileSchemaBack } from "@/schemas";
 import { auth } from "@/auth";
-import { addExtraData, addUserDni, getUserDni } from "@/data/user";
+import { addExtraData, addUserDni, getUserById, getUserDni } from "@/data/user";
 import { redirect } from "next/navigation";
 import { object, z } from "zod";
 
@@ -18,6 +18,20 @@ export const verifyDni = async () => {
       redirect("/profile");
     }
   }
+};
+
+export const showProfile = async () => {
+  const session = await auth();
+  if (!session) {
+    throw new Error("Unauthorized");
+  }
+
+  const user = await getUserById(session.user.id);
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  return user.status === "approved";
 };
 
 export const showDni = async () => {

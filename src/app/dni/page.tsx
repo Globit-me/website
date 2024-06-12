@@ -8,6 +8,7 @@ import DropdownField from "@/components/profile/DropdownField";
 import { updateProfile } from "@/actions/profile";
 import { profileSchema } from "@/schemas";
 import { z } from "zod";
+import toast from "react-hot-toast";
 
 const ProfilePage: React.FC = () => {
   const {
@@ -45,6 +46,12 @@ const ProfilePage: React.FC = () => {
 
     await updateProfile(formData);
     reset();
+
+    toast.success("Perfil actualizado correctamente");
+
+    setTimeout(() => {
+      window.location.href = "/profile";
+    }, 2000);
   };
 
   const countries = ["Argentina"];
