@@ -18,14 +18,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
-import { Session } from "@auth/core/types";
+import { useSession } from "next-auth/react";
+
 
 interface NavbarMenuProps {
   handleSignOut: () => Promise<void>;
-  session: Session | null;
 }
 
-export function NavbarMenu({ handleSignOut, session }: NavbarMenuProps) {
+export function NavbarMenu({ handleSignOut }: NavbarMenuProps) {
+
+  const session = useSession();
+  const authenticated = session.status === "authenticated";
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
@@ -42,7 +46,7 @@ export function NavbarMenu({ handleSignOut, session }: NavbarMenuProps) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          {session ? (
+          { authenticated ? (
             <>
               <DropdownMenuItem asChild>
                 <Link
