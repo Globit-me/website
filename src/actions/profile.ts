@@ -1,10 +1,9 @@
 "use server";
 
-import { profileSchema, profileSchemaBack } from "@/schemas";
+import {  profileSchemaBack } from "@/schemas";
 import { auth } from "@/auth";
 import { addExtraData, addUserDni, getUserById, getUserDni } from "@/data/user";
 import { redirect } from "next/navigation";
-import { object, z } from "zod";
 
 export const verifyDni = async () => {
   const session = await auth();
@@ -32,21 +31,6 @@ export const showProfile = async () => {
   }
 
   return user.status === "approved";
-};
-
-export const showDni = async () => {
-  const session = await auth();
-  if (!session) {
-    throw new Error("Unauthorized");
-  }
-
-  const dni = await getUserDni(session.user.id);
-  if (dni && dni.front) {
-    const base64Image = Buffer.from(dni.front).toString("base64");
-    return `data:image/png;base64,${base64Image}`;
-  } else {
-    throw new Error("DNI not found");
-  }
 };
 
 export const updateProfile = async (data: FormData) => {

@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
 import { VerificationToken } from "@prisma/client";
+import { User } from "@/types/user";
 
 export const getUserByEmail = async (email: string) => {
   try {
@@ -93,6 +94,34 @@ export const getUsersDniVerification = async (twoDaysAgo: Date) => {
     });
   } catch (error) {
     console.error(error);
+    return [];
+  }
+};
+
+export const postApproveUser = async (id: string, date: Date) => {
+  try {
+    return await db.user.update({
+      where: { id },
+      data: {
+        status: "approved",
+        viewedDate: date,
+      },
+    });
+  } catch (error) {
+    return null;
+  }
+};
+
+export const postRejectUser = async (id: string, date: Date) => {
+  try {
+    return await db.user.update({
+      where: { id },
+      data: {
+        status: "rejected",
+        viewedDate: date,
+      },
+    });
+  } catch (error) {
     return null;
   }
 };
