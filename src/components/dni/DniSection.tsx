@@ -1,63 +1,45 @@
 "use client";
-
-import React, { useState } from "react";
+import {
+  approveUser,
+  rejectUser,
+  showRecentViewedUsers,
+  showUsersToVerify,
+} from "@/actions/admin";
+import RecentViewedDNIList from "./RecentViewedDniList";
+import DniItem from "./DniItem";
+import { useEffect, useState } from "react";
 import { User } from "@/types/user";
-import DNIItem from "./DNIItem";
-import dayjs from "dayjs";
-import RecentViewedDNIList from "./RecentViewedDNIList";
 
-const DniSection: React.FC = () => {
-  const [users, setUsers] = useState<User[]>([
-    {
-      id: 1,
-      name: "Juan Perez",
-      email: "juan.perez@example.com",
-      dni: "12345678",
-      dob: "1990-01-01",
-      address: "Calle Falsa 123",
-      dniImage: "/dni.jpg",
-      status: null, // null, 'approved', 'rejected'
-      viewedDate: null,
-    },
-    {
-      id: 2,
-      name: "Maria Gomez",
-      email: "maria.gomez@example.com",
-      dni: "87654321",
-      dob: "1985-05-05",
-      address: "Avenida Siempre Viva 742",
-      dniImage: "/dni.jpg",
-      status: null,
-      viewedDate: null,
-    },
-    // Otros usuarios...
-  ]);
-
-  const handleApprove = (id: number) => {
-    setUsers((prevUsers) =>
-      prevUsers.map((user) =>
-        user.id === id
-          ? { ...user, status: "approved", viewedDate: new Date() }
-          : user
-      )
-    );
-  };
-
-  const handleReject = (id: number) => {
-    setUsers((prevUsers) =>
-      prevUsers.map((user) =>
-        user.id === id
-          ? { ...user, status: "rejected", viewedDate: new Date() }
-          : user
-      )
-    );
-  };
-
-  const recentViewedUsers = users.filter(
-    (user) =>
-      user.viewedDate &&
-      dayjs(user.viewedDate).isAfter(dayjs().subtract(2, "day"))
+const DniSection = () => {
+  const [users, setUsers] = useState<User[] | null>(null);
+  const [recentViewedUsers, setRecentViewedUsers] = useState<User[] | null>(
+    null
   );
+
+  useEffect(() => {
+    showUsersToVerify().then((users) => setUsers(users));
+    showRecentViewedUsers().then((recentViewedUsers) =>
+      setRecentViewedUsers(recentViewedUsers)
+    );
+  }, []);
+
+  const handleApprove = async (id: string | null) => {
+    if (!id) return;
+    await approveUser(id);
+    showUsersToVerify().then((users) => setUsers(users));
+    showRecentViewedUsers().then((recentViewedUsers) =>
+      setRecentViewedUsers(recentViewedUsers)
+    );
+  };
+
+  const handleReject = async (id: string | null) => {
+    if (!id) return;
+    await rejectUser(id);
+    showUsersToVerify().then((users) => setUsers(users));
+    showRecentViewedUsers().then((recentViewedUsers) =>
+      setRecentViewedUsers(recentViewedUsers)
+    );
+  };
 
   return (
     <div className="flex flex-col">
@@ -67,23 +49,25 @@ const DniSection: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <h2 className="text-xl font-bold mb-4">DNIs por Aprobar</h2>
-          {users
-            .filter((user) => !user.status)
-            .map((user) => (
-              <DNIItem
+          {users ? (
+            users.map((user) => (
+              <DniItem
                 key={user.id}
                 user={user}
                 onApprove={handleApprove}
                 onReject={handleReject}
               />
-            ))}
+            ))
+          ) : (
+            <p>No hay DNIs por aprobar</p>
+          )}
         </div>
         <div>
-          <h2 className="text-xl font-bold mb-4">DNIs Vistos Recientemente</h2>
-          {recentViewedUsers.length > 0 ? (
+          <h2 className="text-xl font-bold mb-4">DNIs Recientes</h2>
+          {recentViewedUsers ? (
             <RecentViewedDNIList users={recentViewedUsers} />
           ) : (
-            <p>No hay DNIs vistos recientemente</p>
+            <p>No hay DNIs recientes</p>
           )}
         </div>
       </div>

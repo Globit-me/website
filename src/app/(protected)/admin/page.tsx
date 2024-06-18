@@ -1,5 +1,4 @@
 import DniSection from "@/components/dni/DniSection";
-import OrderSection from "@/components/order/OrderSection";
 
 const AdminPage = () => {
   return (
@@ -8,8 +7,9 @@ const AdminPage = () => {
         Panel de administración
       </h1>
       <div className="space-y-12">
-        <OrderSection />
+        {/* <OrderSection /> */}
         <DniSection />
+        {/* <AccountsSection */}
       </div>
     </div>
   );

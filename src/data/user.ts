@@ -64,11 +64,47 @@ export const updateUserEmail = async (id: string, email: string) => {
     }
 }
 
-export const getUsersDniVerification = async (twoDaysAgo: Date) => {
+
+
+export const getUsersDniVerification = async ():Promise<User[]> => {
   try {
     return await db.user.findMany({
       where: {
         status: "pending",
+        dniImage: {
+          isNot: null,
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        emailVerified: true,
+        password: true,
+        dni: true,
+        dob: true,
+        country: true,
+        province: true,
+        address: true,
+        addressNumber: true,
+        apartment: true,
+        status: true,
+        viewedDate: true,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
+export const getUsersRecentViewedVerification = async (twoDaysAgo: Date):Promise<User[]> => {
+  try {
+    return await db.user.findMany({
+      where: {
+        status: {
+          not: "pending",
+        },
         viewedDate: {
           gte: twoDaysAgo,
         },
@@ -79,8 +115,6 @@ export const getUsersDniVerification = async (twoDaysAgo: Date) => {
         email: true,
         emailVerified: true,
         password: true,
-        role: true,
-        image: true,
         dni: true,
         dob: true,
         country: true,
