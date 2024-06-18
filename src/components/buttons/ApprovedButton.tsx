@@ -11,9 +11,9 @@ import {
 } from "@/components/ui/alert-dialog";
 
 interface ApprovedButtonProps {
-  id: number;
+  id: string | null;
   label: string;
-  onClick: (id: number) => void;
+  onClick: (id: string | null) => void;
 }
 const ApprovedButton: React.FC<ApprovedButtonProps> = ({
   id,

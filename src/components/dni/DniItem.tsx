@@ -1,21 +1,32 @@
-import Image from "next/image";
-import React, { useState } from "react";
-import Modal from "react-modal";
 import { User } from "@/types/user";
+import Modal from "react-modal";
+import Image from "next/image";
 import ApprovedButton from "../buttons/ApprovedButton";
 import RejectButton from "../buttons/RejectButton";
+import { useState } from "react";
+import { showBackUserDni, showFrontUserDni } from "@/actions/admin";
 
-interface DNIItemProps {
+interface DniItemProps {
   user: User;
-  onApprove: (id: number) => void;
-  onReject: (id: number) => void;
+  onApprove: (id: string | null) => void;
+  onReject: (id: string | null) => void;
 }
-
-const DNIItem: React.FC<DNIItemProps> = ({ user, onApprove, onReject }) => {
+const DniItem: React.FC<DniItemProps> = ({ user, onApprove, onReject }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [dniImage, setDniImage] = useState("");
 
-  const fetchLargeImage = async () => {
+  const fetchFrontImage = async () => {
+    if (!user.id) return;
+    const frontImage = await showFrontUserDni(user.id);
+    setDniImage(frontImage);
+    setModalIsOpen(true);
+  };
+
+  const fetchBackImage = async () => {
+    if (!user.id) return;
+    const backImage = await showBackUserDni(user.id);
+    setDniImage(backImage);
     setModalIsOpen(true);
   };
 
@@ -23,22 +34,29 @@ const DNIItem: React.FC<DNIItemProps> = ({ user, onApprove, onReject }) => {
     setModalIsOpen(false);
   };
 
-  const handleConfirmApprove = () => {
-    onApprove(user.id);
+  const handleConfirmApprove = async () => {
+    await onApprove(user?.id);
   };
 
-  const handleConfirmReject = () => {
-    onReject(user.id);
+  const handleConfirmReject = async () => {
+    await onReject(user?.id);
   };
 
+  const formatDateString = (date: Date | null): string | null => {
+    if (!date) return null;
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
   return (
     <div className="p-4 mb-4 bg-white rounded shadow">
-      <h3 className="text-lg font-bold">Usuario #{user.id}</h3>
-      <p className="text-sm">Nombre: {user.name}</p>
+      <h3 className="text-lg font-bold">Usuario {user.name}</h3>
+      <p className="text-sm">id: {user.id}</p>
       <p className="text-sm">Email: {user.email}</p>
       <div className="flex space-x-2">
         <ApprovedButton
-          id={user.id}
+          id={user?.id}
           label="DNI"
           onClick={handleConfirmApprove}
         />
@@ -57,17 +75,25 @@ const DNIItem: React.FC<DNIItemProps> = ({ user, onApprove, onReject }) => {
             <strong>DNI:</strong> {user.dni}
           </p>
           <p>
-            <strong>Fecha de Nacimiento:</strong> {user.dob}
+            <strong>Fecha de Nacimiento:</strong> {formatDateString(user.dob)}
           </p>
           <p>
             <strong>Domicilio:</strong> {user.address}
           </p>
-          <button
-            className="mt-2 px-4 py-2 text-white bg-custom-blue-dark rounded"
-            onClick={fetchLargeImage}
-          >
-            Ver DNI
-          </button>
+          <div className="space-x-3">
+            <button
+              className="mt-2 px-4 py-2 text-white bg-custom-blue-dark rounded"
+              onClick={fetchFrontImage}
+            >
+              Ver Frente Dni
+            </button>
+            <button
+              className="mt-2 px-4 py-2 text-white bg-custom-blue-dark rounded"
+              onClick={fetchBackImage}
+            >
+              Ver Reverso Dni
+            </button>
+          </div>
 
           <Modal
             isOpen={modalIsOpen}
@@ -85,7 +111,7 @@ const DNIItem: React.FC<DNIItemProps> = ({ user, onApprove, onReject }) => {
               </button>
               <div className="relative w-full h-auto">
                 <Image
-                  src={user.dniImage}
+                  src={dniImage}
                   alt="Large view"
                   width={800}
                   height={800}
@@ -99,4 +125,4 @@ const DNIItem: React.FC<DNIItemProps> = ({ user, onApprove, onReject }) => {
   );
 };
 
-export default DNIItem;
+export default DniItem;
