@@ -5,16 +5,15 @@ import Image from "next/image";
 import NavLink from "./NavLink";
 import { NavbarMenu } from "./NavbarMenu";
 import Link from "next/link";
-import { Session } from "@auth/core/types";
 import { UserIcon, LogOutIcon, LogIn, UserPlus } from "lucide-react";
-import { logout } from "@/lib/logout";
+import { signOut, useSession } from "next-auth/react";
 
-interface NavbarProps {
-  session: Session | null;
-}
 
-const Navbar = ({ session }: NavbarProps) => {
+const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const session = useSession();
+  const authenticated = session.status === "authenticated";
+  
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,7 +27,7 @@ const Navbar = ({ session }: NavbarProps) => {
   }, []);
 
   const handleSignOut = async () => {
-    await logout();
+    await signOut();
   };
 
   return (
@@ -45,11 +44,12 @@ const Navbar = ({ session }: NavbarProps) => {
             <header>
               <Link href="/">
                 <Image
-                  src="/logos/globit-logo.png"
+                  src="/logos/globit-logo.jpeg"
                   alt="GLOBIT"
                   priority
                   width={132}
                   height={35}
+                  
                 />
               </Link>
             </header>
@@ -71,12 +71,12 @@ const Navbar = ({ session }: NavbarProps) => {
                 />
               </Link>
             </header>
-            <NavbarMenu handleSignOut={handleSignOut} session={session} />
+            <NavbarMenu handleSignOut={handleSignOut} />
           </div>
         </div>
 
         <div className="flex-row gap-8 items-center hidden md:flex">
-          {session ? (
+          { authenticated ? (
             <>
               <NavLink
                 href="/profile"
