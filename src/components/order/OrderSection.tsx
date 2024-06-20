@@ -38,20 +38,20 @@ const ordersData: Order[] = [
 const OrderSection = () => {
   const [orders, setOrders] = useState<Order[]>(ordersData);
 
-  const closeOrder = (id: number) => {
+  const closeOrder = (id: string | null) => {
     setOrders(
       orders.map((order) =>
-        order.id === id
+        order.id === Number(id)
           ? { ...order, status: "Cerrada", closedDate: new Date() }
           : order
       )
     );
   };
 
-  const rejectOrder = (id: number) => {
+  const rejectOrder = (id: string | null) => {
     setOrders(
       orders.map((order) =>
-        order.id === id
+        order.id === Number(id)
           ? { ...order, status: "Rechazada", closedDate: new Date() }
           : order
       )

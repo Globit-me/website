@@ -3,8 +3,8 @@ import OrderItem from "./OrderItem";
 
 interface OrderListProps {
   orders: Order[];
-  onClose: (id: number) => void;
-  onReject: (id: number) => void;
+  onClose: (id: string | null) => void;
+  onReject: (id: string | null) => void;
 }
 
 const OrderList: React.FC<OrderListProps> = ({ orders, onClose, onReject }) => {
