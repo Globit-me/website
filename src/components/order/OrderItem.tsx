@@ -7,8 +7,8 @@ import RejectButton from "../buttons/RejectButton";
 
 interface OrderItemProps {
   order: Order;
-  onClose?: (id: number) => void;
-  onReject?: (id: number) => void;
+  onClose?: (id: string | null) => void;
+  onReject?: (id: string | null) => void;
   isRecent?: boolean;
 }
 
@@ -42,8 +42,8 @@ const OrderItem: React.FC<OrderItemProps> = ({
       </p>
       {order.status === "Abierta" && !isRecent && onClose && onReject && (
         <div className="flex space-x-2">
-          <ApprovedButton id={order.id} label="orden" onClick={onClose} />
-          <RejectButton id={order.id} label="orden" onClick={onReject} />
+          <ApprovedButton id={order.id.toString()} label="orden" onClick={onClose} />
+          <RejectButton id={order.id.toString()} label="orden" onClick={onReject} />
         </div>
       )}
       <button
