@@ -2,12 +2,12 @@ import { showProfile } from '@/actions/profile';
 import Image from 'next/image';
 
 const ProfilePage = async () => {
-  const isApproved = await showProfile();
+  const currentUser = await showProfile();
 
   return (
     <section className='relative max-w-6xl md:mx-auto mt-32 md:mt-56 mb-56 mx-6'>
-      {isApproved ? (
-        <div>Profile content goes here.</div>
+      {currentUser.status === "approved" ? (
+        <div>{JSON.stringify(currentUser)}</div>
       ) : (
         <div className='flex flex-col items-center justify-center text-center'>
           <h1 className='text-3xl md:text-5xl font-bold text-custom-blue'>Estamos analizando tu perfil</h1>

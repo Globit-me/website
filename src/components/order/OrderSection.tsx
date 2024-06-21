@@ -1,70 +1,15 @@
-"use client";
 
-import { useState } from "react";
-import dayjs from "dayjs";
 import OrderList from "@/components/order/OrderList";
-import RecentOrderList from "@/components/order/RecentOrderList";
-import { Order } from "@/types/order";
 
-const ordersData: Order[] = [
-  {
-    id: 1,
-    clientName: "Juan Perez",
-    status: "Abierta",
-    clientDNI: "12345678",
-    clientDOB: "1990-01-01",
-    clientAddress: "Calle Falsa 123",
-    clientImage: "/dni.jpg",
-    closedDate: null,
-    amountSent: 254,
-    amountReceived: 23,
-    sendingBank: "Banco A",
-  },
-  {
-    id: 2,
-    clientName: "Maria Gomez",
-    status: "Cerrada",
-    clientDNI: "87654321",
-    clientDOB: "1985-05-05",
-    clientAddress: "Avenida Siempre Viva 742",
-    clientImage: "/dni.jpg",
-    closedDate: new Date(),
-    amountSent: 500,
-    amountReceived: 45,
-    sendingBank: "Banco C",
-  },
-];
+import { Order } from "@prisma/client";
 
-const OrderSection = () => {
-  const [orders, setOrders] = useState<Order[]>(ordersData);
+interface OrderSectionProps {
+  orders: Order[];
+  recentOrders: Order[];
+}
 
-  const closeOrder = (id: string | null) => {
-    setOrders(
-      orders.map((order) =>
-        order.id === Number(id)
-          ? { ...order, status: "Cerrada", closedDate: new Date() }
-          : order
-      )
-    );
-  };
-
-  const rejectOrder = (id: string | null) => {
-    setOrders(
-      orders.map((order) =>
-        order.id === Number(id)
-          ? { ...order, status: "Rechazada", closedDate: new Date() }
-          : order
-      )
-    );
-  };
-
-  const recentOrders = orders
-    .filter(
-      (order) =>
-        order.status !== "Abierta" &&
-        dayjs(order.closedDate).isAfter(dayjs().subtract(2, "day"))
-    )
-    .slice(-2);
+const OrderSection = ({ orders, recentOrders }: OrderSectionProps) => {
+  const openOrders = orders.filter((order) => order.status === "Abierta");
 
   return (
     <section className="flex flex-col">
@@ -76,16 +21,16 @@ const OrderSection = () => {
           <h3 className="text-xl font-semibold mb-4">
             Órdenes Abiertas por Cerrar
           </h3>
-          <OrderList
-            orders={orders.filter((order) => order.status === "Abierta")}
-            onClose={closeOrder}
-            onReject={rejectOrder}
-          />
+          {openOrders.length > 0 ? (
+            <OrderList orders={openOrders} />
+          ) : (
+            <p>No hay órdenes abiertas por cerrar</p>
+          )}
         </div>
         <div>
           <h3 className="text-xl font-semibold mb-4">Órdenes Recientes</h3>
           {recentOrders.length > 0 ? (
-            <RecentOrderList orders={recentOrders} />
+            <OrderList orders={recentOrders} />
           ) : (
             <p>No hay órdenes recientes</p>
           )}

@@ -1,22 +1,18 @@
-import { Order } from "@/types/order";
+import { Order } from "@prisma/client";
+import React from "react";
 import OrderItem from "./OrderItem";
+
 
 interface OrderListProps {
   orders: Order[];
-  onClose: (id: string | null) => void;
-  onReject: (id: string | null) => void;
 }
 
-const OrderList: React.FC<OrderListProps> = ({ orders, onClose, onReject }) => {
+
+const OrderList: React.FC<OrderListProps> = ({ orders }) => {
   return (
     <div>
       {orders.map((order) => (
-        <OrderItem
-          key={order.id}
-          order={order}
-          onClose={onClose}
-          onReject={onReject}
-        />
+        <OrderItem key={order.id} order={order} />
       ))}
     </div>
   );

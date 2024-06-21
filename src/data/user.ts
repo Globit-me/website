@@ -22,6 +22,26 @@ export const getUserById = async (id: string) => {
   }
 };
 
+export const getUserByOrderId = async (orderId: string) => {
+  try {
+    const user =  await db.user.findFirst({
+      where: {
+        orders: {
+          some: {
+            id: orderId,
+          },
+        },
+      },
+    });
+
+    return user;
+  } catch (error) {
+    return null;
+  }
+
+}
+
+
 export const createUser = async (email: string, password: string, name: string) => {
     try {
         return await db.user.create({

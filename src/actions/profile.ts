@@ -25,12 +25,15 @@ export const showProfile = async () => {
     throw new Error("Unauthorized");
   }
 
+  console.log("Id: ", session.user.id);
+
   const user = await getUserById(session.user.id);
-  if (!user) {
+  if (user === null) {
     throw new Error("User not found");
   }
 
-  return user.status === "approved";
+  // return user.status === "approved";
+  return { name: user.name, email: user.email, status: user.status };
 };
 
 export const updateProfile = async (data: FormData) => {

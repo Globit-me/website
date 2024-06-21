@@ -1,6 +1,14 @@
 "use server"
 
+import { 
+  getOpenOrders,
+  getRecentClosedOrders,
+  postApproveOrder,
+  postRejectOrder,
+ } from "@/data/order";
+
 import {
+  getUserById,
   getUserDni,
   getUsersDniVerification,
   getUsersRecentViewedVerification,
@@ -28,7 +36,6 @@ export const showBackUserDni = async (id: string) => {
   }
 };
 
-
 export const showUsersToVerify = async () => {
 
   return await getUsersDniVerification();
@@ -41,6 +48,7 @@ export const showRecentViewedUsers = async () => {
   return await getUsersRecentViewedVerification(twoDaysAgo);
 };
 
+
 export const approveUser = async (id: string) => {
   const date = new Date();
 
@@ -51,3 +59,42 @@ export const rejectUser = async (id: string) => {
   const date = new Date();
   await postRejectUser(id, date);
 };
+
+export const getUser = async (id: string) => {
+  const user = await getUserById(id);
+  if (user?.status === "approved") {
+    return {
+      id: user.id!,
+      name: user.name!,
+      email: user.email!,
+      dni: user.dni!,
+      birthday: user.dob!,
+      viewedDate: user.viewedDate!,
+      address: user.address!,
+    }
+  }
+  return null;
+}
+
+export const openOrders = async () => {
+  return await getOpenOrders(); 
+}
+
+export const recentOrders = async () => {
+  const date = new Date();
+  const twoDaysAgo = new Date(date.setDate(date.getDate() - 2));
+  return await getRecentClosedOrders(twoDaysAgo);
+
+}
+
+export const approveOrder = async (id: string) => {
+  console.log("Approving order", id);
+  const date = new Date();
+  await postApproveOrder(id, date);
+}
+
+export const rejectOrder = async (id: string) => {
+  console.log("Rejecting order", id);
+  const date = new Date();
+  await postRejectOrder(id, date);
+}

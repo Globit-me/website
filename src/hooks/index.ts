@@ -7,3 +7,4 @@ export { useToast } from "@/hooks/useToast";
 export { useResetForm } from "@/hooks/useResetForm";
 export { useNewPasswordForm } from "@/hooks/useNewPasswordForm";
 export { useAuthMessageWithToken } from "@/hooks/useAuthMessageWithToken";
+export { useCurrentUser } from "@/hooks/useCurrentUser";

@@ -1,11 +1,18 @@
 "use client";
 
+import React, { useState } from "react";
+
 import RotatingButton from "./RotatingButton";
 import AmountInput from "./AmountInput";
 import BankSelect from "./BankSelect";
 import { useCalculator } from "@/hooks/useCalculator";
 import InfoTooltip from "./InfoTooltip";
 import { Bank } from "@/types/Calculator";
+import { appendOrder } from "@/actions/order";
+import { OrderData } from "@/types/OrderData";
+import { ToastError } from "../form/toast-error";
+import { ToastSuccess } from "../form/toast-success";
+
 
 interface CalculatorProps {
   banks: Bank[];
@@ -13,6 +20,8 @@ interface CalculatorProps {
 }
 
 const Calculator = ({ banks, exchangeRates }: CalculatorProps) => {
+  const [success, setSuccess] = useState<string | undefined>("");
+  const [error, setError] = useState<string | undefined>("");
   const {
     fromBank,
     toBank,
@@ -24,17 +33,23 @@ const Calculator = ({ banks, exchangeRates }: CalculatorProps) => {
     handleAmountChange,
   } = useCalculator(banks, exchangeRates);
 
-  if (!banks.length || !exchangeRates) {
-    console.log(banks, exchangeRates);
-    return <div>Loading...</div>;
-  }
+  const onSubmit = async () => {
+    const orderData: OrderData = {
+      fromBank: fromBank.name,
+      toBank: toBank.name,
+      amount,
+      exchangedAmount
+    };
 
-  if (!fromBank || !toBank) {
-    return <div>Error: Banks data not loaded correctly.</div>;
+    const response = await appendOrder(orderData);
+    console.log(response);
+    response.success ? setSuccess(response.success) : setError(response.error);
   }
 
   return (
     <div className="flex flex-col md:flex-1 items-center justify-center my-8 md:my-0 border-4">
+      <ToastError message={error} />
+      <ToastSuccess message={success} />
       <div className="bg-white shadow-md rounded px-4 py-6 md:px-8 md:pt-6 md:pb-8 flex flex-col w-full">
         <div className="mb-0 md:mb-4 flex flex-col md:flex-row items-center">
           <AmountInput
@@ -68,9 +83,8 @@ const Calculator = ({ banks, exchangeRates }: CalculatorProps) => {
         </div>
         <div className="mt-2 flex flex-row items-center w-full">
           <button
-            onClick={() => {
-              console.log("Button Clicked");
-            }}
+            type="submit"
+            onClick={onSubmit}
             className="bg-custom-blue text-white font-bold py-2 px-4 rounded w-full md:w-8/12 hover:bg-custom-blue-dark transition duration-300"
           >
             Solicita tu envío

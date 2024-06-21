@@ -8,10 +8,12 @@ import Link from "next/link";
 import { UserIcon, LogOutIcon, LogIn, UserPlus } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import { verifyDni } from "@/actions/profile";
+import { ToastError } from "../form/toast-error";
 
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [error, setError] = useState('');
   const session = useSession();
   const authenticated = session.status === "authenticated";
   
@@ -33,6 +35,7 @@ const Navbar = () => {
 
   const handleProfile = async () => {
     await verifyDni()
+      .catch(error => setError(error));
   };
 
   return (
@@ -44,6 +47,7 @@ const Navbar = () => {
       }`}
     >
       <div className="flex flex-row md:justify-between justify-evenly py-6 px-4 md:px-0 max-w-6xl mx-auto">
+        <ToastError message={error} />
         <div className="hidden md:block">
           <div className="flex flex-row gap-10 items-center justify-between">
             <header>
