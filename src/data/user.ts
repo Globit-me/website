@@ -1,5 +1,4 @@
 import { db } from "@/lib/db";
-import { VerificationToken } from "@prisma/client";
 import { User } from "@/types/user";
 
 export const getUserByEmail = async (email: string) => {
@@ -11,6 +10,19 @@ export const getUserByEmail = async (email: string) => {
     return null;
   }
 };
+
+export const getUserStatus = async (id: string) => {
+  try {
+    return await db.user.findUnique({
+      where: { id },
+      select: {
+        status: true,
+      },
+    });
+  } catch (error) {
+    return null;
+  }
+}
 
 export const getUserById = async (id: string) => {
   try {
@@ -229,6 +241,8 @@ export const addExtraData = async (
         address,
         addressNumber,
         apartment,
+        viewedDate: null,
+        status: "pending",
       },
     });
   } catch (error) {

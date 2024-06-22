@@ -52,7 +52,8 @@ const DniItem: React.FC<DniItemProps> = ({ user, onApprove, onReject }) => {
   return (
     <div className="p-4 mb-4 bg-white rounded shadow">
       <h3 className="text-lg font-bold">Usuario {user.name}</h3>
-      <p className="text-sm">id: {user.id}</p>
+      <p className="text-sm">Id: {user.id}</p>
+      <p className="text-sm">Dni: {user.dni}</p>
       <p className="text-sm">Email: {user.email}</p>
       <div className="flex space-x-2">
         <ApprovedButton
@@ -72,13 +73,14 @@ const DniItem: React.FC<DniItemProps> = ({ user, onApprove, onReject }) => {
       {showDetails && (
         <div className="mt-4 p-4 bg-gray-100 rounded">
           <p>
-            <strong>DNI:</strong> {user.dni}
-          </p>
-          <p>
             <strong>Fecha de Nacimiento:</strong> {formatDateString(user.dob)}
           </p>
           <p>
-            <strong>Domicilio:</strong> {user.address}
+            <strong>Localidad:</strong> {user.country} - {user.province}
+          </p>
+          <p>
+            <strong>Domicilio:</strong> {user.address} {user.addressNumber}{" "}
+            {user.apartment}
           </p>
           <div className="space-x-3">
             <button

@@ -1,8 +1,14 @@
 "use server";
 
-import {  profileSchemaBack } from "@/schemas";
+import { profileSchemaBack } from "@/schemas";
 import { auth } from "@/auth";
-import { addExtraData, addUserDni, getUserById, getUserDni } from "@/data/user";
+import {
+  addExtraData,
+  addUserDni,
+  getUserById,
+  getUserDni,
+  getUserStatus,
+} from "@/data/user";
 import { redirect } from "next/navigation";
 
 export const verifyDni = async () => {
@@ -10,11 +16,19 @@ export const verifyDni = async () => {
   if (!session) {
     throw new Error("Unauthorized");
   } else {
-    const dni = await getUserDni(session.user.id);
-    if (!dni || !dni.front) {
-      redirect("/dni");
-    } else {
+    const status = await getUserStatus(session.user.id);
+    if (status?.status === "verified") {
       redirect("/profile");
+    } else {
+      const dni = await getUserDni(session.user.id);
+
+      if (status?.status === "pending" || !dni || !dni.front) {
+        redirect("/dni");
+      } else if (status?.status === "rejected") {
+        redirect("/dni");
+      } else if (status?.status === "pending" || dni.front) {
+        redirect("/profile");
+      }
     }
   }
 };
@@ -25,14 +39,11 @@ export const showProfile = async () => {
     throw new Error("Unauthorized");
   }
 
-  console.log("Id: ", session.user.id);
-
   const user = await getUserById(session.user.id);
   if (user === null) {
     throw new Error("User not found");
   }
 
-  // return user.status === "approved";
   return { name: user.name, email: user.email, status: user.status };
 };
 
