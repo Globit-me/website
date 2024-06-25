@@ -2,7 +2,7 @@
 import { motion } from 'framer-motion';
 import React from 'react'
 
-const GuaranteeText = () => {
+const GuaranteeText = ({ title, color = "text-custom-blue" }: { title: string, color?: string }) => {
     const titleVariants = {
         hidden: { opacity: 0, y: 20 },
         visible: {
@@ -20,9 +20,9 @@ const GuaranteeText = () => {
             <motion.div>
                 <motion.h2
                     variants={titleVariants}
-                    className='text-lg md:text-xl text-custom-blue font-bold mt-4 md:mt-6'
+                    className={`text-2xl md:text-2xl font-bold  ${"color: " + color}`}
                 >
-                Te Protegemos contra: 
+                {title}
                 </motion.h2>
             </motion.div>
         </motion.div>

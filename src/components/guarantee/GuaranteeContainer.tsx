@@ -1,7 +1,6 @@
 import React from 'react'
 import GuaranteeList from './GuaranteeList'
 
-
 const GuaranteeContainer = () => {
   return (
     <div className="">

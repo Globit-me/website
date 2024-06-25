@@ -1,22 +1,23 @@
 import React from 'react'
 import { Shield } from "lucide-react"
 import GuaranteeItem from './GuaranteeItem'
+import { string } from 'zod'
 
 const guaranteeList = [
     {
         title: 'Protección contra Fraudes',
         description: 'Nuestro sistema de seguridad avanzado protege tus transacciones y datos personales.',
-        icon: Shield
+        imageUrl: "/guarantee/panel_seguridad_2.svg",
     },
     {
         title: 'Aumento de Cotizaciones',
         description: 'Congelamos tus cotizaciones por 24 horas para que puedas realizar tus transacciones con tranquilidad.',
-        icon: Shield
+        imageUrl: "/guarantee/calculadora.svg",
     },
     {
-        title: '',
+        title: 'Transacciones Seguras',
         description: 'Tus transacciones están protegidas con la última tecnología en seguridad y encriptación.',
-        icon: Shield
+        imageUrl: "/guarantee/notebook.svg"
     },
 ]
 
@@ -26,7 +27,7 @@ const GuaranteeList = () => {
     {guaranteeList.map((guarantee, index) => (
         <GuaranteeItem
           key={index}
-          Icon={guarantee.icon}
+          imageUrl={guarantee.imageUrl}
           title={guarantee.title}
           description={guarantee.description}
         />
