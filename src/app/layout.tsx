@@ -6,7 +6,7 @@ import Navbar from "@/components/navbar/Navbar";
 import { Toaster } from 'react-hot-toast';
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
-import Head from "next/head";
+
 
 const poppins = Poppins({ weight: ["400"], subsets: ["latin"] });
 
@@ -25,9 +25,6 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <Head>
-        <link rel="canonical" href="https://globit.me" />
-      </Head>
       <body className={poppins.className}>
         <SessionProvider session={session}>
           <Navbar />
