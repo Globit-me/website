@@ -22,13 +22,21 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/public/logos/globit-logo.jpeg",
-        width: 200,
-        height: 200,
+        width: 400,
+        height: 400,
         alt: "Globit",
       }
     ]
   },
-  manifest: "/manifest.json",
+  twitter: {
+    card: "summary_large_image",
+    site: "@globit",
+    creator: "@globit",
+    images: "/public/logos/globit-logo.jpeg"
+  },
+  alternates: {
+    canonical: "https://globit.me",
+  }
 };
 
 export default async function RootLayout({
