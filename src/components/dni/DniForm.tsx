@@ -2,9 +2,9 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import FileUploadField from "@/components/profile/FileUploadField";
-import InputField from "@/components/profile/InputField";
-import DropdownField from "@/components/profile/DropdownField";
+import FileUploadField from "@/components/dni/FileUploadField";
+import InputField from "@/components/dni/InputField";
+import DropdownField from "@/components/dni/DropdownField";
 import { updateProfile } from "@/actions/profile";
 import { profileSchema } from "@/schemas";
 import { z } from "zod";
