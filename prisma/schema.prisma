@@ -4,7 +4,8 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
 
 model User {
@@ -71,11 +72,11 @@ model PasswordResetToken {
 }
 
 model DNIImage {
-  id     String @id @default(cuid())
+  id      String @id @default(cuid())
   front   Bytes
   reverse Bytes?
-  userId String @unique
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String @unique
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Order {

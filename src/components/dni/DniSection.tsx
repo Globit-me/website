@@ -16,29 +16,27 @@ const DniSection = () => {
     null
   );
 
+  const fetchUsers = async () => {
+    const users = await showUsersToVerify();
+    setUsers(users);
+    const recentViewedUsers = await showRecentViewedUsers();
+    setRecentViewedUsers(recentViewedUsers);
+  };
+
   useEffect(() => {
-    showUsersToVerify().then((users) => setUsers(users));
-    showRecentViewedUsers().then((recentViewedUsers) =>
-      setRecentViewedUsers(recentViewedUsers)
-    );
+    fetchUsers();
   }, []);
 
   const handleApprove = async (id: string | null) => {
     if (!id) return;
     await approveUser(id);
-    showUsersToVerify().then((users) => setUsers(users));
-    showRecentViewedUsers().then((recentViewedUsers) =>
-      setRecentViewedUsers(recentViewedUsers)
-    );
+    fetchUsers();
   };
 
   const handleReject = async (id: string | null) => {
     if (!id) return;
     await rejectUser(id);
-    showUsersToVerify().then((users) => setUsers(users));
-    showRecentViewedUsers().then((recentViewedUsers) =>
-      setRecentViewedUsers(recentViewedUsers)
-    );
+    fetchUsers();
   };
 
   return (
