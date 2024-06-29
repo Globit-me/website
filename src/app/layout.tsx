@@ -7,12 +7,24 @@ import { Toaster } from 'react-hot-toast';
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 
-
 const poppins = Poppins({ weight: ["400"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  
   title: "Globit",
   description: "Cambio de divisas en línea",
+  icons: {
+    icon: [
+      {
+        url: '/logos/globit-icon-white.webp',
+        media: '(prefers-color-scheme: light)',
+      },
+      {
+        url: '/logos/globit-icon-blue.webp',
+        media: '(prefers-color-scheme: dark)',
+      },
+    ],
+  },
   openGraph: {
     type: "website",
     url: "https://globit.me",
@@ -21,7 +33,7 @@ export const metadata: Metadata = {
     siteName: "Globit",
     images: [
       {
-        url: "/public/logos/globit-logo.jpeg",
+        url: "/logos/globit-logo.avif",
         width: 400,
         height: 400,
         alt: "Globit",
@@ -32,7 +44,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@globit",
     creator: "@globit",
-    images: "/public/logos/globit-logo.jpeg"
+    images: "/logos/globit-logo.jpeg"
   },
   alternates: {
     canonical: "https://globit.me",

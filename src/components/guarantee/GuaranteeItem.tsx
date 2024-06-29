@@ -10,7 +10,7 @@ import React from 'react'
 
 const GuaranteeItem = ({ title, description, imageUrl }: guaranteeItemProps) => {
   return (
-    <div className="flex flex-col items-center bg-white p-6 rounded-lg shadow-lg">
+    <div className="flex flex-col items-center bg-white p-6 rounded-lg shadow-lg text-pretty">
         <Image 
           src={imageUrl}
           alt=""
