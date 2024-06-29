@@ -1,23 +1,21 @@
 import React from 'react'
-import { Shield } from "lucide-react"
 import GuaranteeItem from './GuaranteeItem'
-import { string } from 'zod'
 
 const guaranteeList = [
     {
         title: 'Protección contra Fraudes',
         description: 'Nuestro sistema de seguridad avanzado protege tus transacciones y datos personales.',
-        imageUrl: "/guarantee/panel_seguridad_2.svg",
+        imageUrl: "/guarantee/panel_seguridad_2.avif",
     },
     {
         title: 'Aumento de Cotizaciones',
         description: 'Congelamos tus cotizaciones por 24 horas para que puedas realizar tus transacciones con tranquilidad.',
-        imageUrl: "/guarantee/calculadora.svg",
+        imageUrl: "/guarantee/calculator.avif",
     },
     {
         title: 'Transacciones Seguras',
         description: 'Tus transacciones están protegidas con la última tecnología en seguridad y encriptación.',
-        imageUrl: "/guarantee/notebook.svg"
+        imageUrl: "/guarantee/notebook.avif"
     },
 ]
 

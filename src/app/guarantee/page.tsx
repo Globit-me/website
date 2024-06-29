@@ -12,7 +12,7 @@ const GuaranteePage = () => {
         <div className='flex flex-col md:flex-row justify-evenly mb-16  mx-6 md:mx-0 items-center'>
           <GuaranteeText title="En Globitme, Te brindamos seguridad a traves de nuestra garantia" color="black" />
           <Image
-          src="/guarantee/panel_seguridad.svg"
+          src="/guarantee/panel_seguridad.avif"
           alt="Guarantee"
           width={500}
           height={500}
