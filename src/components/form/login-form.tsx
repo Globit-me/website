@@ -93,9 +93,10 @@ const LoginForm = () => {
         <div className="hidden md:block ml-20">
           <Image
             src="/gif/login.gif"
-            alt="Descripción de la imagen"
+            alt=""
             width={500}
             height={500}
+            unoptimized
           />
         </div>
       </section>

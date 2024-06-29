@@ -4,11 +4,11 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 const images = [
-  { src: "/brands/paypal.png", alt: "paypal" },
-  { src: "/brands/deel.png", alt: "deel" },
-  { src: "/brands/payoneer.png", alt: "payoneer" },
-  { src: "/brands/wise.png", alt: "wise" },
-  { src: "/brands/zelle.png", alt: "zelle" },
+  { src: "/brands/paypal.webp", alt: "paypal" },
+  { src: "/brands/deel.webp", alt: "deel" },
+  { src: "/brands/payoneer.webp", alt: "payoneer" },
+  { src: "/brands/wise.webp", alt: "wise" },
+  { src: "/brands/zelle.webp", alt: "zelle" },
 ];
 
 const ImageCarousel = () => {
