@@ -53,7 +53,7 @@ const Navbar = () => {
             <header>
               <Link href="/">
                 <Image
-                  src="/logos/globit-logo.jpeg"
+                  src="/logos/globit-logo.avif"
                   alt="GLOBIT"
                   priority
                   width={132}
@@ -72,7 +72,7 @@ const Navbar = () => {
             <header>
               <Link href="/">
                 <Image
-                  src="/logos/globit-logo.png"
+                  src="/logos/globit-logo.avif"
                   alt="GLOBIT"
                   priority
                   width={132}

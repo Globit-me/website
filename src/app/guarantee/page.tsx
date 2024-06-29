@@ -16,7 +16,7 @@ const GuaranteePage = () => {
           alt="Guarantee"
           width={500}
           height={500}
-          
+        
         />
         </div>
         <GuaranteeText title="Te protegemos contra: "  /> 

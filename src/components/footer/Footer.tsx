@@ -42,7 +42,7 @@ const Footer = () => {
           <div className="flex flex-col w-full md:w-1/4">
             <div className="relative w-full h-24 mt-auto">
               <Image
-                src="/logos/globit.png"
+                src="/logos/globit.webp"
                 alt="Globit logo"
                 fill
                 className="object-contain"
@@ -50,7 +50,7 @@ const Footer = () => {
             </div>
             <div className="relative w-full h-24 mt-auto">
               <Image
-                src="/logos/ASAEDE-1.png"
+                src="/logos/ASAEDE-1.webp"
                 alt="Asociación Argentina"
                 fill
                 className="object-contain"
