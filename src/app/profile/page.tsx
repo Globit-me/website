@@ -1,22 +1,21 @@
-import { showProfile } from '@/actions/profile';
-import Image from 'next/image';
+import { showProfile } from "@/actions/profile";
+import Pending from "@/components/profile/Pending";
+import Approved from "@/components/profile/Approved";
 
 const ProfilePage = async () => {
   const currentUser = await showProfile();
 
   return (
-    <section className='relative max-w-6xl md:mx-auto mt-32 md:mt-56 mb-56 mx-6'>
-      {currentUser.status === "approved" ? (
-        <div>{JSON.stringify(currentUser)}</div>
-      ) : (
-        <div className='flex flex-col items-center justify-center text-center'>
-          <h1 className='text-3xl md:text-5xl font-bold text-custom-blue'>Estamos analizando tu perfil</h1>
-          <p className='mt-4 text-lg md:text-xl text-custom-black'>Por favor, vuelve más tarde para verificar el estado de tu perfil.</p>
-          <Image src="/gif/pending.gif" width={450} height={450} alt='Pending'/>
-        </div>
-      )}
-    </section>
+    <div className="flex">
+      <section className="flex-grow relative max-w-6xl md:mx-auto mt-32 mb-56 mx-6">
+        {currentUser.status === "approved" ? (
+          <Approved />
+        ) : (
+          <Pending />
+        )}
+      </section>
+    </div>
   );
-}
+};
 
 export default ProfilePage;

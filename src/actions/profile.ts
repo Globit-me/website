@@ -17,7 +17,7 @@ export const verifyDni = async () => {
     throw new Error("Unauthorized");
   } else {
     const status = await getUserStatus(session.user.id);
-    if (status?.status === "verified") {
+    if (status?.status === "approved") {
       redirect("/profile");
     } else {
       const dni = await getUserDni(session.user.id);
