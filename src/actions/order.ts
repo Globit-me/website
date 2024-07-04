@@ -23,7 +23,7 @@ export const appendOrder = async (orderData: OrderData) =>  {
         createOrder(orderData, user.id);
         return { success: "Se ha enviado la orden correctamente!",  };
     } catch (error) {
-        return { error: "Hubo algun error al crear la orden" };
+        return { error: "Hubo algún error al crear la orden" };
     }
 }
 

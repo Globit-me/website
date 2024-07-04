@@ -1,7 +1,5 @@
 "use client";
 
-import React, { useState } from "react";
-
 import RotatingButton from "./RotatingButton";
 import AmountInput from "./AmountInput";
 import BankSelect from "./BankSelect";
@@ -10,9 +8,18 @@ import InfoTooltip from "./InfoTooltip";
 import { Bank } from "@/types/Calculator";
 import { appendOrder } from "@/actions/order";
 import { OrderData } from "@/types/OrderData";
-import { ToastError } from "../form/toast-error";
-import { ToastSuccess } from "../form/toast-success";
-
+import toast from "react-hot-toast";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface CalculatorProps {
   banks: Bank[];
@@ -20,8 +27,6 @@ interface CalculatorProps {
 }
 
 const Calculator = ({ banks, exchangeRates }: CalculatorProps) => {
-  const [success, setSuccess] = useState<string | undefined>("");
-  const [error, setError] = useState<string | undefined>("");
   const {
     fromBank,
     toBank,
@@ -38,18 +43,19 @@ const Calculator = ({ banks, exchangeRates }: CalculatorProps) => {
       fromBank: fromBank.name,
       toBank: toBank.name,
       amount,
-      exchangedAmount
+      exchangedAmount,
     };
 
     const response = await appendOrder(orderData);
-    console.log(response);
-    response.success ? setSuccess(response.success) : setError(response.error);
-  }
+    if (response.error) {
+      toast.error(response.error);
+    } else if (response.success) {
+      toast.success(response.success);
+    }
+  };
 
   return (
     <div className="flex flex-col md:flex-1 items-center justify-center my-8 md:my-0 border-4">
-      <ToastError message={error} />
-      <ToastSuccess message={success} />
       <div className="bg-white shadow-md rounded px-4 py-6 md:px-8 md:pt-6 md:pb-8 flex flex-col w-full">
         <div className="mb-0 md:mb-4 flex flex-col md:flex-row items-center">
           <AmountInput
@@ -82,13 +88,32 @@ const Calculator = ({ banks, exchangeRates }: CalculatorProps) => {
           />
         </div>
         <div className="mt-2 flex flex-row items-center w-full">
-          <button
-            type="submit"
-            onClick={onSubmit}
-            className="bg-custom-blue text-white font-bold py-2 px-4 rounded w-full md:w-8/12 hover:bg-custom-blue-dark transition duration-300"
-          >
-            Solicita tu envío
-          </button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <button className="bg-custom-blue text-white font-bold py-2 px-4 rounded w-full md:w-7/12 hover:bg-custom-blue-dark transition duration-300">
+                Solicita tu envío
+              </button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle className="text-black">
+                  Confirmar pedido
+                </AlertDialogTitle>
+                <AlertDialogDescription>
+                  Por favor, revise los datos y confirme el pedido.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={onSubmit}
+                  className="bg-green-700 hover:bg-green-800"
+                >
+                  Aprobar
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
           <InfoTooltip />
         </div>
       </div>

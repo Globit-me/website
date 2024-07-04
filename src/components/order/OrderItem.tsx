@@ -81,7 +81,7 @@ const OrderItem: React.FC<OrderItemProps> = ({ order }) => {
         Estado: {`${order.status}`}
       </p>
       {order.status === "Abierta" && (
-        <div className="flex space-x-2">
+        <div className="flex space-x-3">
           <ApprovedButton id={order.id} label="orden" onClick={handleOrderApprove} />
           <RejectButton id={order.id} label="orden" onClick={handleOrderReject} />
         </div>
