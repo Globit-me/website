@@ -4,7 +4,7 @@ import { auth } from "@/auth";
 import { getUserById } from "@/data/user";
 import { redirect } from "next/navigation";
 import { OrderData } from "@/types/OrderData";
-import { createOrder } from "@/data/order";
+import { createOrder, getOrdersByUserId } from "@/data/order";
 
 export const appendOrder = async (orderData: OrderData) =>  {
     const session = await auth();
@@ -27,3 +27,12 @@ export const appendOrder = async (orderData: OrderData) =>  {
     }
 }
 
+export const getUserOrders = async () => {
+    const session = await auth();
+
+    if (!session) redirect("/login");
+
+    const orders = await getOrdersByUserId(session.user.id);
+
+    return orders;
+}

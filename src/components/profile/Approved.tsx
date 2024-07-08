@@ -21,7 +21,7 @@ const Approved = ({ banks, exchangeRates }: CalculatorProps) => {
       case "create-order":
         return <CreateOrder banks={banks} exchangeRates={exchangeRates}/>;
       case "orders":
-        return <Orders />;
+        return <Orders banks={banks}/>;
       case "dollars":
         return <Dollars />;
       default:
