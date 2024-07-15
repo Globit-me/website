@@ -9,24 +9,24 @@ const Footer = () => {
     {
       title: "Ayuda",
       links: [
-        { href: "/preguntas", text: "Preguntas frecuentes" },
-        { href: "/nosotros", text: "Nosotros" },
-        { href: "/referidos", text: "Programa de referidos" },
-        { href: "/blog", text: "Blog" },
+        { href: "/soon", text: "Preguntas frecuentes" },
+        { href: "/soon", text: "Nosotros" },
+        { href: "/soon", text: "Programa de referidos" },
+        { href: "/soon", text: "Blog" },
       ],
     },
     {
       title: "Legales",
       links: [
-        { href: "/garantia", text: "Garantía" },
-        { href: "/politicas", text: "Política de privacidad" },
-        { href: "/condiciones", text: "Términos y condiciones" },
+        { href: "/guarantee", text: "Garantía" },
+        { href: "/soon", text: "Política de privacidad" },
+        { href: "/terms", text: "Términos y condiciones" },
       ],
     },
     {
       title: "Contactos",
       links: [
-        { href: "tel:+595991629158", text: "📱 +595991629158" },
+        { href: "tel:+5493512568840", text: "📱 +5493512568840" },
         { href: "mailto:contacto@globit.me", text: "✉️ contacto@globit.me" },
       ],
     },

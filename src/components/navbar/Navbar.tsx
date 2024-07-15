@@ -62,7 +62,7 @@ const Navbar = () => {
                 />
               </Link>
             </header>
-            <NavLink href="/faq">Preguntas frecuentes</NavLink>
+            <NavLink href="/terms">Términos y condiciones</NavLink>
             <NavLink href="/guarantee">Garantía</NavLink>
           </div>
         </div>
