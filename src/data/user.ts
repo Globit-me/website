@@ -22,7 +22,7 @@ export const getUserStatus = async (id: string) => {
   } catch (error) {
     return null;
   }
-}
+};
 
 export const getUserById = async (id: string) => {
   try {
@@ -36,7 +36,7 @@ export const getUserById = async (id: string) => {
 
 export const getUserByOrderId = async (orderId: string) => {
   try {
-    const user =  await db.user.findFirst({
+    const user = await db.user.findFirst({
       where: {
         orders: {
           some: {
@@ -50,55 +50,55 @@ export const getUserByOrderId = async (orderId: string) => {
   } catch (error) {
     return null;
   }
+};
 
-}
-
-
-export const createUser = async (email: string, password: string, name: string) => {
-    try {
-        return await db.user.create({
-            data: {
-                email,
-                password,
-                name
-            }
-        })
-    } catch (error) {
-        console.log("ERROR: ", error);
-        throw new Error("Error creating a new user");
-    }
-}
+export const createUser = async (
+  email: string,
+  password: string,
+  name: string
+) => {
+  try {
+    return await db.user.create({
+      data: {
+        email,
+        password,
+        name,
+      },
+    });
+  } catch (error) {
+    console.log("ERROR: ", error);
+    throw new Error("Error creating a new user");
+  }
+};
 
 export const updateUserPassword = async (id: string, password: string) => {
-    try {
-        return await db.user.update({
-            where: { id },
-            data: { password }
-        })
-    } catch (error) {
-        console.log("ERROR: ", error);
-        throw new Error("Error updating password user");
-    }
-}
+  try {
+    return await db.user.update({
+      where: { id },
+      data: { password },
+    });
+  } catch (error) {
+    console.log("ERROR: ", error);
+    throw new Error("Error updating password user");
+  }
+};
 
 export const updateUserEmail = async (id: string, email: string) => {
-    try {
-        return await db.user.update({
-            where: {id: id},
-            data: {
-                emailVerified: new Date(),
-                email: email,
-            }
-        });
-    } catch (error) {
-        console.log("ERROR: ", error);
-        throw new Error("Error updating email user");
-    }
-}
+  try {
+    return await db.user.update({
+      where: { id: id },
+      data: {
+        emailVerified: new Date(),
+        email: email,
+      },
+    });
+  } catch (error) {
+    console.log("ERROR: ", error);
+    throw new Error("Error updating email user");
+  }
+};
 
-
-
-export const getUsersDniVerification = async ():Promise<User[]> => {
+export const getUsersDniVerification = async (): Promise<User[]> => {
   try {
     return await db.user.findMany({
       where: {
@@ -130,7 +130,9 @@ export const getUsersDniVerification = async ():Promise<User[]> => {
   }
 };
 
-export const getUsersRecentViewedVerification = async (twoDaysAgo: Date):Promise<User[]> => {
+export const getUsersRecentViewedVerification = async (
+  twoDaysAgo: Date
+): Promise<User[]> => {
   try {
     return await db.user.findMany({
       where: {
@@ -246,6 +248,20 @@ export const addExtraData = async (
       },
     });
   } catch (error) {
+    return null;
+  }
+};
+
+export const getRole = async (email: string) => {
+  try {
+    return await db.user.findUnique({
+      where: { email },
+      select: {
+        role: true,
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching user role:", error);
     return null;
   }
 };

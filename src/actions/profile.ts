@@ -36,7 +36,7 @@ export const verifyDni = async () => {
 export const showProfile = async () => {
   const session = await auth();
   if (!session) {
-    throw new Error("Unauthorized");
+    redirect("/login");
   }
 
   const user = await getUserById(session.user.id);

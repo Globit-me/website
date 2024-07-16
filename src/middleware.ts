@@ -7,13 +7,13 @@ import {
   publicRoutes,
   adminRoutes,
 } from "@/routes";
+import { verifyRole } from "./actions/admin";
 
 const { auth } = NextAuth(authConfig);
 
-export default auth((req) => {
+export default auth(async (req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
-  const role = req.auth?.user.role!;
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
@@ -28,21 +28,22 @@ export default auth((req) => {
     if (isLoggedIn) {
       return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
     }
-    return;
   }
 
   if (isAdminRoute) {
-    console.log("User Role:", role);
-    if (!isLoggedIn || role !== "ADMIN") {
+    if (!isLoggedIn) {
       return Response.redirect(new URL("/login", nextUrl));
+    } else {
+      const userEmail = req.auth?.user?.email || "";
+      const isAdmin = await verifyRole(userEmail);
+
+      if (!isAdmin) {
+        return Response.redirect(new URL("/", nextUrl));
+      }
     }
-  }
 
-  if (!isLoggedIn && !isPublicRoute) {
-    return Response.redirect(new URL("/login", nextUrl));
+    return;
   }
-
-  return;
 });
 
 export const config = {

@@ -20,7 +20,7 @@ const Orders = ({ banks }: OrderProps) => {
 
   const fetchOrders = async () => {
     const UserOrders = await getUserOrders();
-    setOrders(UserOrders.reverse()); 
+    setOrders(UserOrders.reverse());
   };
 
   useEffect(() => {
@@ -36,9 +36,13 @@ const Orders = ({ banks }: OrderProps) => {
     return currency === "USD" ? "ARS" : "USD";
   };
 
+  const formatDate = (date: Date | null) => {
+    return date ? date.toLocaleDateString() : "N/A";
+  };
+
   return (
     <div className="p-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {orders.map((order) => {
           const sendingCurrency = getCurrency(order.sendingBank);
           const receivingCurrency = getOppositeCurrency(sendingCurrency);
@@ -57,8 +61,7 @@ const Orders = ({ banks }: OrderProps) => {
                     Orden: {order.status}
                   </p>
                   <p className="text-custom-black text-sm sm:text-base">
-                    Cierre:{" "}
-                    {order.closedDate ? order.closedDate.toString() : "N/A"}
+                    Cierre: {formatDate(order.closedDate)}
                   </p>
                 </div>
                 <div>
