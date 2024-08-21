@@ -7,18 +7,18 @@ export const sendVerificationEmail = async (email: string, token: string) => {
     const confirmLink = `${domain}/new-verification?token=${token}`;
 
     await resend.emails.send({
-        from: "onboarding@resend.dev",
+        from: "contact@globit.me",
         to: email,
         subject: "Confirma tu correo",
         html: `<p>Para confirmar tu correo, haz click en el siguiente enlace: <a href="${confirmLink}">${confirmLink}</a></p>`,
     });
-} 
+}
 
 export const sendPasswordResetEmail = async (email: string, token: string) => {
     const resetLink = `${domain}/new-password?token=${token}`;
     
     await resend.emails.send({
-        from: "onboarding@resend.dev",
+        from: "contact@globit.me",
         to: email,
         subject: "Reestablece tu contraseña",
         html: `<p>Para reestablecer tu contraseña, haz click en el siguiente enlace: <a href="${resetLink}">${resetLink}</a></p>`,
