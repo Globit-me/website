@@ -50,7 +50,7 @@ const InfoTooltip = () => {
               <h4 className="font-bold">De Dólar a Peso</h4>
               <ul className="list-disc list-inside">
                 <li>Transacción hasta 24 horas.</li>
-                <li>Comisión 5.5% + 10 USD de cobro</li>
+                <li>Comisión 5.5% + 10 USD de cobro (Paypal con 4,5% de gasto adicional)</li>
               </ul>
             </div>
             <div>
