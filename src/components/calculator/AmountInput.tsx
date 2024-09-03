@@ -5,10 +5,11 @@ interface AmountInputProps {
   amount: number;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   readOnly?: boolean;
+  className?: string;  // Añadido para pasar clases adicionales
 }
 
-const AmountInput: React.FC<AmountInputProps> = ({ label, amount, onChange, readOnly = false }) => (
-  <div className="relative flex-grow mb-4 md:mb-0">
+const AmountInput: React.FC<AmountInputProps> = ({ label, amount, onChange, readOnly = false, className = "" }) => (
+  <div className={`relative flex-grow mb-4 md:mb-0 ${className}`}>
     <input
       id={label}
       type="text"

@@ -37,10 +37,23 @@ const Calculator = ({ banks, exchangeRates }: CalculatorProps) => {
   } = useCalculator(banks, exchangeRates);
 
   // Filtra los bancos para que solo se muestren los que son válidos para enviar (es decir, solo USD)
-  const filteredFromBanks = banks.filter(bank => bank.currency === "USD");
+  const filteredFromBanks = banks.filter((bank) => bank.currency === "USD");
 
-  // Filtra los bancos para que solo se muestren los que son válidos para recibir (es decir, USD o ARS)
-  const filteredToBanks = banks.filter(bank => bank.currency === "USD" || bank.currency === "ARS");
+  // Filtra los bancos para que solo se muestren los que son válidos para recibir dependiendo de la selección de envío
+  const filteredToBanks =
+    fromBank.name === "Paypal"
+      ? banks.filter(
+          (bank) =>
+            bank.name === "Paypal" ||
+            ["Uala", "Brubank", "Banco Arg", "Mercado pago"].includes(bank.name)
+        )
+      : ["Payoneer", "Deel", "Zelle", "Wise"].includes(fromBank.name)
+      ? banks.filter(
+          (bank) =>
+            bank.name !== "Paypal" &&
+            (bank.currency === "USD" || bank.currency === "ARS")
+        )
+      : banks.filter((bank) => bank.currency === "USD" || bank.currency === "ARS");
 
   const onSubmit = async () => {
     const orderData: OrderData = {
@@ -61,35 +74,45 @@ const Calculator = ({ banks, exchangeRates }: CalculatorProps) => {
   return (
     <div className="flex flex-col md:flex-1 items-center justify-center my-8 md:my-0 border-4">
       <div className="bg-white shadow-md rounded px-4 py-6 md:px-8 md:pt-6 md:pb-8 flex flex-col w-full">
-        <div className="mb-0 md:mb-4 flex flex-col md:flex-row items-center">
-          <AmountInput
-            label={`Envías ${fromBank?.currency}`}
-            amount={amount}
-            onChange={handleAmountChange}
-          />
-          <BankSelect
-            label="Desde Banco"
-            selectedBank={fromBank?.name}
-            onChange={handleFromBankChange}
-            banks={filteredFromBanks} // Usamos los bancos filtrados
-          />
+        <div className="mb-0 md:mb-4 flex flex-col md:flex-row items-center gap-4">
+          <div className="flex-1">
+            <AmountInput
+              label={`Envías ${fromBank?.currency}`}
+              amount={amount}
+              onChange={handleAmountChange}
+              className="w-full" // Mantener ancho completo
+            />
+          </div>
+          <div className="flex-1">
+            <BankSelect
+              label="Desde Banco"
+              selectedBank={fromBank?.name}
+              onChange={handleFromBankChange}
+              banks={filteredFromBanks}
+            />
+          </div>
         </div>
 
-        <div className="mb-0 md:mb-4 flex flex-col md:flex-row items-center">
-          <AmountInput
-            label={`Recibes ${toBank?.currency}`}
-            amount={exchangedAmount}
-            onChange={() => {}}
-            readOnly
-          />
-          <BankSelect
-            label="A Banco"
-            selectedBank={toBank?.name}
-            onChange={handleToBankChange}
-            banks={filteredToBanks} // Usamos los bancos filtrados
-          />
+        <div className="mb-0 md:mb-4 flex flex-col md:flex-row items-center gap-4">
+          <div className="flex-1">
+            <AmountInput
+              label={`Recibes ${toBank?.currency}`}
+              amount={exchangedAmount}
+              onChange={() => {}}
+              readOnly
+              className="w-full" // Mantener ancho completo
+            />
+          </div>
+          <div className="flex-1">
+            <BankSelect
+              label="A Banco"
+              selectedBank={toBank?.name}
+              onChange={handleToBankChange}
+              banks={filteredToBanks}
+            />
+          </div>
         </div>
-        <div className="mt-2 flex flex-row items-center w-full">
+        <div className="mt-2 flex flex-row items-center w-full justify-center">
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <button className="bg-custom-blue text-white font-bold py-2 px-4 rounded w-full md:w-7/12 hover:bg-custom-blue-dark transition duration-300">
