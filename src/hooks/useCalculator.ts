@@ -8,39 +8,45 @@ export const useCalculator = (
   exchangeRates: { buy: number; sell: number } | null
 ) => {
   const [fromBank, setFromBank] = useState(banks[0]);
-  const [toBank, setToBank] = useState(banks[5]);
+  const [toBank, setToBank] = useState(banks[1]);
   const [amount, setAmount] = useState(0);
 
   const exchangedAmount = useMemo(() => {
     if (fromBank && toBank && exchangeRates) {
       let amountAfterCommission = amount;
-
-      // Aplica la comisión de PayPal si el banco de origen es PayPal
-      if (fromBank.name === "Paypal") {
+  
+      // Aplicar comisión adicional de PayPal si el banco de origen es PayPal
+      if (fromBank.name === "Paypal" || toBank.name == "Paypal") {
         amountAfterCommission = amountAfterCommission * (1 - 0.045);
       }
-
-      if (fromBank.currency === "USD" && toBank.currency === "ARS") {
-        // Cobro de 10 USD adicional
-        amountAfterCommission = amountAfterCommission - 10;
-        
+  
+      if (fromBank.currency === "USD" && toBank.currency === "USD") {
+        // Aplicar comisión de 6.5% + 10 USD para transferencias de dólar a dólar
+        const commission = amountAfterCommission * 0.065;
+        const totalDeduction = commission + 10;
+        amountAfterCommission = amountAfterCommission - totalDeduction;
+  
+        // Asegurarse de que no sea negativo
+        amountAfterCommission = Math.max(amountAfterCommission, 0);
+  
+        return Number(amountAfterCommission.toFixed(2));
+      } else if (fromBank.currency === "USD" && toBank.currency === "ARS") {
         // Comisión de 5.5% para cambiar de USD a ARS
         amountAfterCommission = amountAfterCommission * (1 - 0.055);
         
+        // Descontar 10 USD adicionales antes de convertir a ARS
+        amountAfterCommission = amountAfterCommission - 10;
+  
+        // Asegurarse de que no sea negativo
+        amountAfterCommission = Math.max(amountAfterCommission, 0);
+        
+        // Luego, convertir el monto a ARS
         return Number((amountAfterCommission * exchangeRates.sell).toFixed(2));
-      }
-     else if (fromBank.currency === "ARS" && toBank.currency === "USD") {
-        // Comisión de 6.5% y cobro de 10 USD para cambiar de ARS a USD
-        const commission = amountAfterCommission * 0.065;
-        const totalDeduction = commission + 10 * exchangeRates.buy;
-        amountAfterCommission = amountAfterCommission - totalDeduction;
-        return Number((amountAfterCommission / exchangeRates.buy).toFixed(2));
       }
     }
     return 0;
   }, [fromBank, toBank, amount, exchangeRates]);
-
-
+  
 
   const calculateExchange = useCallback(
     (() => {

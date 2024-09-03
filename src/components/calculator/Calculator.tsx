@@ -1,6 +1,5 @@
 "use client";
 
-import RotatingButton from "./RotatingButton";
 import AmountInput from "./AmountInput";
 import BankSelect from "./BankSelect";
 import { useCalculator } from "@/hooks/useCalculator";
@@ -34,9 +33,14 @@ const Calculator = ({ banks, exchangeRates }: CalculatorProps) => {
     exchangedAmount,
     handleFromBankChange,
     handleToBankChange,
-    handleSwitchBanks,
     handleAmountChange,
   } = useCalculator(banks, exchangeRates);
+
+  // Filtra los bancos para que solo se muestren los que son válidos para enviar (es decir, solo USD)
+  const filteredFromBanks = banks.filter(bank => bank.currency === "USD");
+
+  // Filtra los bancos para que solo se muestren los que son válidos para recibir (es decir, USD o ARS)
+  const filteredToBanks = banks.filter(bank => bank.currency === "USD" || bank.currency === "ARS");
 
   const onSubmit = async () => {
     const orderData: OrderData = {
@@ -67,11 +71,9 @@ const Calculator = ({ banks, exchangeRates }: CalculatorProps) => {
             label="Desde Banco"
             selectedBank={fromBank?.name}
             onChange={handleFromBankChange}
-            banks={banks}
+            banks={filteredFromBanks} // Usamos los bancos filtrados
           />
         </div>
-
-        <RotatingButton onClick={handleSwitchBanks} className="mb-4" />
 
         <div className="mb-0 md:mb-4 flex flex-col md:flex-row items-center">
           <AmountInput
@@ -84,7 +86,7 @@ const Calculator = ({ banks, exchangeRates }: CalculatorProps) => {
             label="A Banco"
             selectedBank={toBank?.name}
             onChange={handleToBankChange}
-            banks={banks}
+            banks={filteredToBanks} // Usamos los bancos filtrados
           />
         </div>
         <div className="mt-2 flex flex-row items-center w-full">
