@@ -50,11 +50,11 @@ const InfoTooltip = () => {
               <h4 className="font-bold">De Dólar a Peso</h4>
               <ul className="list-disc list-inside">
                 <li>Transacción hasta 24 horas.</li>
-                <li>Comisión 5.5%.</li>
+                <li>Comisión 5.5% + 10 USD de cobro</li>
               </ul>
             </div>
             <div>
-              <h4 className="font-bold">De Peso a Dólar</h4>
+              <h4 className="font-bold">De Dolar a Dólar</h4>
               <ul className="list-disc list-inside">
                 <li>Transacción hasta 48 horas.</li>
                 <li>Comisión 6.5% + 10 USD de cobro.</li>

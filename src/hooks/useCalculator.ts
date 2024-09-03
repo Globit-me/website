@@ -15,20 +15,32 @@ export const useCalculator = (
     if (fromBank && toBank && exchangeRates) {
       let amountAfterCommission = amount;
 
+      // Aplica la comisión de PayPal si el banco de origen es PayPal
+      if (fromBank.name === "Paypal") {
+        amountAfterCommission = amountAfterCommission * (1 - 0.045);
+      }
+
       if (fromBank.currency === "USD" && toBank.currency === "ARS") {
+        // Cobro de 10 USD adicional
+        amountAfterCommission = amountAfterCommission - 10;
+        
         // Comisión de 5.5% para cambiar de USD a ARS
-        amountAfterCommission = amount * (1 - 0.055);
+        amountAfterCommission = amountAfterCommission * (1 - 0.055);
+        
         return Number((amountAfterCommission * exchangeRates.sell).toFixed(2));
-      } else if (fromBank.currency === "ARS" && toBank.currency === "USD") {
+      }
+     else if (fromBank.currency === "ARS" && toBank.currency === "USD") {
         // Comisión de 6.5% y cobro de 10 USD para cambiar de ARS a USD
-        const commission = amount * 0.065;
+        const commission = amountAfterCommission * 0.065;
         const totalDeduction = commission + 10 * exchangeRates.buy;
-        amountAfterCommission = amount - totalDeduction;
+        amountAfterCommission = amountAfterCommission - totalDeduction;
         return Number((amountAfterCommission / exchangeRates.buy).toFixed(2));
       }
     }
     return 0;
   }, [fromBank, toBank, amount, exchangeRates]);
+
+
 
   const calculateExchange = useCallback(
     (() => {
