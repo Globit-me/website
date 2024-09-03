@@ -36,10 +36,12 @@ const LoginForm = () => {
   const [isPending, startTransition] = useTransition();
 
   const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
-    startTransition(() => {
-      handleResponse(values, login);
+    startTransition(async () => {
+      await handleResponse(values, login);
+      window.location.href = "/"; // Esto recarga completamente la página principal
     });
   };
+  
 
   return (
     <Suspense fallback={<div>Loading...</div>}>

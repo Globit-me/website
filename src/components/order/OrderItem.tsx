@@ -136,26 +136,30 @@ const OrderItem: React.FC<OrderItemProps> = ({ order }) => {
             isOpen={modalIsOpen}
             onRequestClose={closeModal}
             contentLabel="Large Image Modal"
-            className="flex justify-center items-center h-full"
+            className="flex justify-center items-center h-full w-full"
             overlayClassName="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center"
-          >
-            <div className="relative bg-white p-12 md:p-20 rounded shadow-lg max-w-full max-h-full">
-              <button
-                onClick={closeModal}
-                className="absolute top-2 right-2 text-white bg-red-500 rounded-full p-2 focus:outline-none"
-              >
-                Cerrar
-              </button>
-              <div className="relative w-full h-auto">
-                <Image
-                  src={dniImage}
-                  alt="Large view"
-                  width={800}
-                  height={800}
-                />
-              </div>
+        >
+            <div className="relative bg-white p-4 md:p-8 rounded shadow-lg max-w-full max-h-full">
+                <button
+                    onClick={closeModal}
+                    className="absolute top-2 right-2 text-white bg-red-500 rounded-full p-2 focus:outline-none"
+                >
+                    Cerrar
+                </button>
+                <div className="relative w-full h-auto">
+                    <Image
+                        src={dniImage}
+                        alt="Large view"
+                        layout="responsive"
+                        width={800}
+                        height={500}
+                        className="object-contain"
+                    />
+                </div>
             </div>
-          </Modal>
+        </Modal>
+
+
       </div>
       )}
     </div>

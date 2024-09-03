@@ -9,17 +9,14 @@ const Footer = () => {
     {
       title: "Ayuda",
       links: [
-        { href: "/soon", text: "Preguntas frecuentes" },
         { href: "/soon", text: "Nosotros" },
         { href: "/soon", text: "Programa de referidos" },
-        { href: "/soon", text: "Blog" },
       ],
     },
     {
       title: "Legales",
       links: [
         { href: "/guarantee", text: "Garantía" },
-        { href: "/soon", text: "Política de privacidad" },
         { href: "/terms", text: "Términos y condiciones" },
       ],
     },
